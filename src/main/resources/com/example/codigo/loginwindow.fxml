@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F0FFF0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.codigo.LogInController">
+   <effect>
+      <DropShadow />
+   </effect>
+   <left>
+      <AnchorPane prefHeight="400.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+         <ImageView fitHeight="345.0" fitWidth="271.0" layoutX="15.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+            <effect>
+               <InnerShadow />
+            </effect>
+            <Image url="@images/logo.jpg" />
+         </ImageView>
+      </AnchorPane>
+   </left>
+   <center>
+      <AnchorPane prefHeight="400.0" prefWidth="299.0" BorderPane.alignment="CENTER">
+         <TextField fx:id="email" layoutY="175.0" prefHeight="29.0" prefWidth="274.0" promptText="E-Mail" />
+         <Label layoutY="78.0" text="Password:">
+            <font>
+               <Font name="System Italic" size="24.0" />
+            </font>
+         </Label>
+         <Label layoutY="14.0" text="Name:">
+            <font>
+               <Font name="System Italic" size="24.0" />
+            </font>
+         </Label>
+         <TextField fx:id="username" layoutY="49.0" prefHeight="29.0" prefWidth="274.0" promptText="Name" />
+         <PasswordField fx:id="password" layoutY="113.0" prefHeight="29.0" prefWidth="274.0" promptText="Password" />
+         <Button fx:id="button" layoutX="110.0" layoutY="306.0" mnemonicParsing="false" onAction="#clickLogin" text="Log In" textFill="#797979">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Button>
+         <Label fx:id="IncorrectLogIn" layoutX="41.0" layoutY="280.0" prefHeight="17.0" prefWidth="212.0" textFill="RED" />
+         <Label layoutY="142.0" text="E-Mail:">
+            <font>
+               <Font name="System Italic" size="24.0" />
+            </font>
+         </Label>
+         <ComboBox fx:id="Provinces" layoutY="235.0" prefHeight="25.0" prefWidth="107.0" promptText="Province">
+            <items>
+               <FXCollections fx:factory="observableArrayList">
+                  <String fx:id="GuanacastePro" fx:value="Guanacaste" />
+                  <String fx:id="HerediaPro" fx:value="Heredia" />
+                  <String fx:id="SanJosePro" fx:value="Sanjose" />
+                  <String fx:id="AlajuelaPro" fx:value="Alajuela" />
+                  <String fx:id="LimonPro" fx:value="Limon" />
+                  <String fx:id="PuntarenasPro" fx:value="Puntarenas" />
+                  <String fx:id="CartagoPro" fx:value="Cartago" />
+               </FXCollections>
+            </items>
+         </ComboBox>
+      </AnchorPane>
+   </center>
+</BorderPane>

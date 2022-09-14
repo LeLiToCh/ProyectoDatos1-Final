@@ -9,9 +9,9 @@ public class next_previous {
 
     public static void IDSong(String[] args) {
         String[] song = {
-                "Mil horas",
-                "Por ese hombre",
-                "A esa",
+                "Songs\\Adriel Favela X Javier Rosas  La Escuela No Me Gustó Video Oficial.mp3",
+                "Songs\\",
+                "Songs\\",
                 "Algo de mi",
                 "Si me dejas ahora",
                 "¿Quieres ser mi amante?",

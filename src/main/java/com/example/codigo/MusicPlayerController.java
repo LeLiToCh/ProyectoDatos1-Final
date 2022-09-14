@@ -24,6 +24,11 @@ public class MusicPlayerController {
     private Button volumeUpButton;
     @FXML
     private Button volumeDownButton;
+    @FXML
+    private Button previousButton;
+    @FXML
+    private Button nextButton;
+
 
 
 
@@ -40,14 +45,20 @@ public class MusicPlayerController {
     public void volumeDownButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
         volumeDownControl(0.2);                                                                   // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
     }
+    public void previousButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
+        volumeDownControl(0.2);                                                                   // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
+    }
+    public void nextButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
+        volumeDownControl(0.2);                                                                   // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
+    }
 
 
     MP3Player player;
 
 
     Boolean Pause = false;
-
-    File songFile = new File("Songs\\Tan Soldao.mp3");
+    Boolean temp = true;
+    File songFile = new File("Songs\\Adriel Favela X Javier Rosas  La Escuela No Me Gustó Video Oficial.mp3");
 
 
 
@@ -131,18 +142,32 @@ public class MusicPlayerController {
     }
 
     private void playBtnClicked(){
-        player = new MP3Player();
-        player.addToPlayList(songFile);
-        player.play();
-        playButton.setDisable(true);
+        if (temp == true) {
+
+            player = new MP3Player();
+            player.addToPlayList(songFile);
+            player.play();
+            pauseButton.setDisable(false);
+            playButton.setDisable(true);
+            temp= false;
+
+        }
+        else{
+            player.play();
+            pauseButton.setDisable(false);
+            playButton.setDisable(true);
 
 
+
+        }
     }
 
     private void pauseBtnClicked(){
-        if (Pause == false) {
+        if (Pause == false){
             player.pause();
-            Pause = true;
+            //Pause = true;
+            playButton.setDisable(false);
+            pauseButton.setDisable(true);
         }
         else{
             player.play();

@@ -20,6 +20,8 @@
       </font>
    </Label>
    <Label layoutX="286.0" layoutY="84.0" />
-   <Button fx:id="pauseButton" layoutX="137.0" layoutY="208.0" mnemonicParsing="false" onAction="#pauseButtonClicked" text="pause" />
+   <Button fx:id="pauseButton" layoutX="134.0" layoutY="208.0" mnemonicParsing="false" onAction="#pauseButtonClicked" text="Pause" />
    <Label fx:id="songName" layoutX="279.0" layoutY="91.0" text="Playing" />
+   <Button fx:id="nextButton" layoutX="526.0" layoutY="208.0" mnemonicParsing="false" onAction="#nextButtonClicked" text="Next" />
+   <Button fx:id="previousButton" layoutX="447.0" layoutY="208.0" mnemonicParsing="false" onAction="#previousButtonClicked" text="Previous" />
 </AnchorPane>

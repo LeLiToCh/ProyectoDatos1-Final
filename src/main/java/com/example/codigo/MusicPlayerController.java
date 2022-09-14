@@ -45,11 +45,12 @@ public class MusicPlayerController {
     public void volumeDownButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
         volumeDownControl(0.2);                                                                   // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
     }
+
     public void previousButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
-        volumeDownControl(0.2);                                                                   // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
+                                                                        // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
     }
     public void nextButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
-        volumeDownControl(0.2);                                                                   // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
+                                                                        // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
     }
 
 
@@ -150,14 +151,11 @@ public class MusicPlayerController {
             pauseButton.setDisable(false);
             playButton.setDisable(true);
             temp= false;
-
         }
         else{
             player.play();
             pauseButton.setDisable(false);
             playButton.setDisable(true);
-
-
 
         }
     }

@@ -5,21 +5,23 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import jaco.mp3.player.*;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
 
+public class MusicPlayerController  {
 
-
-public class MusicPlayerController {
     @FXML
     public Label songName;
     @FXML
-    private Button playButton;
+    public ImageView continueRep;
     @FXML
-    private Button pauseButton;
+    public Button playButton;
+    @FXML
+    public Button pauseButton;
     @FXML
     private Button volumeUpButton;
     @FXML
@@ -28,40 +30,74 @@ public class MusicPlayerController {
     private Button previousButton;
     @FXML
     private Button nextButton;
-
-
+    @FXML
+    public Button startPlayButton;
+    @FXML
+    private Button addSongButton;
+    @FXML
+    private Button deleteSongButton;
 
 
     public void playButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
-        playBtnClicked();                                                                   // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
+
+        playBtnClicked();                                                                      // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
     }
 
     public void pauseButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
         pauseBtnClicked();                                                                   // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
     }
+
     public void volumeUpButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
         volumeUpControl(0.2);                                                                   // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
     }
+
     public void volumeDownButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
         volumeDownControl(0.2);                                                                   // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
     }
 
     public void previousButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
-                                                                        // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
-    }
-    public void nextButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
-                                                                        // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
+        // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
+        player.skipBackward();
     }
 
+    public void nextButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
+        player.skipForward();
+        // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
+    }
+    public void startPlayBtnGetPressed(ActionEvent event) throws IOException, InterruptedException {
+
+        player = new MP3Player();
+        Node current = canciones.head;
+        while (current != null) {
+
+            player.addToPlayList((File) current.getData() );
+            current = current.getNext();
+
+        }
+        playButton.setVisible(true);
+        startPlayButton.setVisible(false);
+        pauseButton.setVisible(true);
+
+    }
+    public void addSongButtonClicked(ActionEvent event) throws IOException, InterruptedException {
+
+
+
+    }
+    public void deleteSongButtonClicked(ActionEvent event) throws IOException, InterruptedException {
+
+
+
+    }
+    public void continueRepClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
+
+                                                                             // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
+    }
 
     MP3Player player;
-
-
     Boolean Pause = false;
     Boolean temp = true;
-    File songFile = new File("Songs\\Adriel Favela X Javier Rosas  La Escuela No Me Gustó Video Oficial.mp3");
-
-
+    File songFile = new File("Songs\\Tan Soldao.mp3");
 
 
     private void volumeDownControl(Double value) {
@@ -142,17 +178,19 @@ public class MusicPlayerController {
 
     }
 
-    private void playBtnClicked(){
+    DoubleLL canciones = LogInController.usedFiles();
+
+    public void playBtnClicked() { // aqui poner un condicional con un booleano para la reproduccion continua
+        nextButton.setDisable(false);
+        previousButton.setDisable(false);
         if (temp == true) {
 
-            player = new MP3Player();
-            player.addToPlayList(songFile);
             player.play();
             pauseButton.setDisable(false);
             playButton.setDisable(true);
-            temp= false;
-        }
-        else{
+            temp = false;
+
+        } else {
             player.play();
             pauseButton.setDisable(false);
             playButton.setDisable(true);
@@ -160,19 +198,24 @@ public class MusicPlayerController {
         }
     }
 
-    private void pauseBtnClicked(){
-        if (Pause == false){
+    public void pauseBtnClicked() {
+        if (Pause == false) {
             player.pause();
             //Pause = true;
             playButton.setDisable(false);
             pauseButton.setDisable(true);
-        }
-        else{
+            nextButton.setDisable(true);
+            previousButton.setDisable(true);
+
+        } else {
             player.play();
             Pause = false;
+
+
         }
 
     }
+
     public void userLogOut(ActionEvent event) throws IOException { // funcion log out hace lo mismo que change scene, solo que aqui cambia la escena a la primera (la del log in)
 
         LogInApplication m = new LogInApplication();
@@ -181,4 +224,10 @@ public class MusicPlayerController {
         playButton.setDisable(false);
     }
 
+
+
+
+
 }
+
+

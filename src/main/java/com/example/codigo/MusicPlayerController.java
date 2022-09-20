@@ -8,12 +8,15 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
 import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import static com.example.codigo.LogInController.*;
 
 
-public class MusicPlayerController  {
-
+public class MusicPlayerController{
     @FXML
     public Label songName;
     @FXML
@@ -36,10 +39,20 @@ public class MusicPlayerController  {
     private Button addSongButton;
     @FXML
     private Button deleteSongButton;
-
+    @FXML
+    private Button continueRepButton;
+    //boolean temp2= true;
+    @FXML
+    private Button showFavoriteBtn;
+    int songNumber = 0;
+    @FXML
+    private Button addToFavoriteBtn;
+    public String songToFvrt;
+   //public Node canciones = null;
+    //LogInController see=new LogInController();
+    //FavotireSongsController fvrt= new FavotireSongsController();
 
     public void playButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
-
         playBtnClicked();                                                                      // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
     }
 
@@ -57,17 +70,82 @@ public class MusicPlayerController  {
 
     public void previousButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
         // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
-        player.skipBackward();
-    }
+            if(temp2== false) {
+                player.skipBackward();
+                songNumber--;
+            }
+            if(temp2==true && songNumber==0){
 
+            }
+    }
+    public void addToFavoriteBtnGetClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
+        songToFvrt = String.valueOf(songplayed.get(1));
+
+        songToFvrt = songToFvrt.replace("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs\\", ""  );
+        System.out.println(songToFvrt);
+        try
+        {
+            String filePath = fvrSongTxt;
+            FileWriter fw = new FileWriter(filePath, true);
+            String lineToAppend = songToFvrt;
+            fw.write(lineToAppend);
+            fw.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+
+
+    }
+    public void showFavoriteBtnGetPressed(ActionEvent event) throws IOException,InterruptedException{
+        LogInApplication m = new LogInApplication();
+        m.changeScene("favoriteSongs.fxml");
+        player.pause();
+        playButton.setDisable(false);
+
+    }
+    public static List<String> favoriteSongsList= new ArrayList<String>();
+
+
+
+
+    //DoubleLL canciones= LogInController.usedFiles();
     public void nextButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
-        player.skipForward();
-        // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
-    }
-    public void startPlayBtnGetPressed(ActionEvent event) throws IOException, InterruptedException {
 
+        if (temp2==false) {
+            player.skipForward();
+            songNumber++;
+            System.out.println(songNumber);
+        }
+
+        if (temp2==true && songNumber==3){
+
+                player.pause();
+
+                Node current = songsToList.head;
+
+                System.out.println(songNumber + "sigue cambiando");
+                while (current != null) {
+                    player.addToPlayList((File) current.getData() );
+                    current = current.getNext();
+                }
+                player.play();
+                songNumber=0;
+        }
+        if(temp2==true && songNumber!=3){
+            player.skipForward();
+            songNumber++;
+            System.out.println(songNumber + "si cambia");
+        }
+    }
+
+
+
+    public void startPlayBtnGetPressed(ActionEvent event) throws IOException, InterruptedException {
         player = new MP3Player();
-        Node current = canciones.head;
+        Node current = songsToList.head;
+
         while (current != null) {
 
             player.addToPlayList((File) current.getData() );
@@ -77,6 +155,7 @@ public class MusicPlayerController  {
         playButton.setVisible(true);
         startPlayButton.setVisible(false);
         pauseButton.setVisible(true);
+        //System.out.println(songplayed);
 
     }
     public void addSongButtonClicked(ActionEvent event) throws IOException, InterruptedException {
@@ -89,15 +168,35 @@ public class MusicPlayerController  {
 
 
     }
-    public void continueRepClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
 
-                                                                             // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
+    public void continueRepClicked(ActionEvent event) throws IOException, InterruptedException {
+        if (temp2==false) {
+            temp2 = true;
+            System.out.println(temp2);
+        }
+        if (temp2==true){
+
+            temp2=false;
+        }
     }
+
 
     MP3Player player;
     Boolean Pause = false;
     Boolean temp = true;
-    File songFile = new File("Songs\\Tan Soldao.mp3");
+    Boolean temp2 = false;
+    public boolean continueRepButtonClicked(ActionEvent event) throws IOException, InterruptedException {
+        if (temp2==false) {
+            temp2 = true;
+        }
+        else{
+
+            temp2=false;
+        }
+        return temp2;
+
+    }
+
 
 
     private void volumeDownControl(Double value) {
@@ -178,9 +277,11 @@ public class MusicPlayerController  {
 
     }
 
-    DoubleLL canciones = LogInController.usedFiles();
+
+    //DoubleLL canciones = LogInController.usedFiles();
 
     public void playBtnClicked() { // aqui poner un condicional con un booleano para la reproduccion continua
+
         nextButton.setDisable(false);
         previousButton.setDisable(false);
         if (temp == true) {
@@ -206,25 +307,18 @@ public class MusicPlayerController  {
             pauseButton.setDisable(true);
             nextButton.setDisable(true);
             previousButton.setDisable(true);
-
         } else {
             player.play();
             Pause = false;
-
-
         }
-
     }
 
     public void userLogOut(ActionEvent event) throws IOException { // funcion log out hace lo mismo que change scene, solo que aqui cambia la escena a la primera (la del log in)
-
         LogInApplication m = new LogInApplication();
         m.changeScene("loginwindow.fxml");
         player.pause();
         playButton.setDisable(false);
     }
-
-
 
 
 

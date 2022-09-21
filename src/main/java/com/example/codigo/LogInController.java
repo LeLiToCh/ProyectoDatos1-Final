@@ -3,7 +3,10 @@ package com.example.codigo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.jdom2.JDOMException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,16 +44,22 @@ public class LogInController extends DoubleLL<Node> {
     public static String fvrSongTxt;
     public static String userPlaylist;
 
-    public void userLogIn(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
+
+
+    public void userLogIn(ActionEvent event) throws IOException, InterruptedException, ParserConfigurationException, TransformerException, JDOMException { // metodo que se activa si el boton de acceso es tocado,
 
         clickLogin();           // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
     }
     //public String province = "";
 
     @FXML // el siguiente metodo tiene que ir como un FXML, porque actua directamente ne el sino, no puede acceder al fxml y cambiar deacuerdo al condicional, si lo quitamos no compila.
-    private void clickLogin() throws IOException, InterruptedException { // metodo que hace las validaciones, entre ellas: contrasenna y usuario correcto o no de los diferentes usuarios, ademas del cambio de escena.
-        LogInApplication m = new LogInApplication();
+    private void clickLogin() throws IOException, InterruptedException, ParserConfigurationException, TransformerException, JDOMException { // metodo que hace las validaciones, entre ellas: contrasenna y usuario correcto o no de los diferentes usuarios, ademas del cambio de escena.
 
+        LogInApplication m = new LogInApplication();
+        XMLController t = new XMLController();
+        //ShowXML n = new ShowXML();
+        //n.showXML();
+        t.XMLCreator();
         // borrar este condicional antes de enviar, simplemente este es para acceso mas facil y hacer pruebas
         if (username.getText().toString().equals("1") && password.getText().toString().equals("1") && email.getText().toString().equals("1") && Provinces.getSelectionModel().getSelectedItem().equals("Guanacaste") ){ // hacemos validacion si el campo de usuario y contrasenna son los de nuestro usuarios (si estan correctos)
             TimeUnit.SECONDS.sleep(1);

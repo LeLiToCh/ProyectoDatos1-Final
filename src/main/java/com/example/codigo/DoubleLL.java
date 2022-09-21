@@ -3,9 +3,10 @@ package com.example.codigo;
 import java.io.File;
 
 public class DoubleLL<N> {
-    public Node head;
+    public static Node head;
     Node tail = null;
     public int size = 0;
+    public static Node current = head;
 
     public Node next;
     //private canciones;
@@ -13,6 +14,18 @@ public class DoubleLL<N> {
 
 
     DoubleLL<N> songsList;
+
+    public static Node settNext(){
+        current=current.next;
+
+
+        return current;
+    }
+
+
+
+
+
 
     //DoubleLL canciones= LogInController.usedFiles();
 
@@ -42,6 +55,17 @@ public class DoubleLL<N> {
         //Size will count the number of nodes present in the list
         size++;
     }
+    public void remove(Node node) {
+        if (node.previous == null) {
+            head = node.next;
+        } else if (node.next == null) {
+            tail = node.previous;
+        } else {
+            node.previous.next = node.next;
+            node.next.previous = node.previous;
+        }
+    }
+
     public void setNext(Node node) {
 
         this.tail.next = node;

@@ -4,6 +4,7 @@ module com.example.codigo {
     requires java.desktop;
     requires jaco.mp3.player;
     requires org.jetbrains.annotations;
+    requires jdom2;
 
 
     opens com.example.codigo to javafx.fxml;

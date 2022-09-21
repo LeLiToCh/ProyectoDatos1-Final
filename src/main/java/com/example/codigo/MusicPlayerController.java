@@ -7,6 +7,10 @@ import jaco.mp3.player.*;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -16,8 +20,22 @@ import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Scanner;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+
+import javax.xml.transform.dom.DOMSource;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import static com.example.codigo.LogInController.*;
+
 
 
 public class MusicPlayerController{
@@ -51,8 +69,21 @@ public class MusicPlayerController{
     int songNumber = 0;
     @FXML
     private Button addToFavoriteBtn;
+    @FXML
+    private Label artistNameLabel;
+    @FXML
+    private Label songNameLabel;
+    @FXML
+    private Label yearLabel;
+    @FXML
+    private Label genreLabel;
+    @FXML
+    private Label albumLabel;
+
+
     public String songToFvrt;
-   //public Node canciones = null;
+    public Node songToRmv;
+    //public Node canciones = null;
     //LogInController see=new LogInController();
     //FavotireSongsController fvrt= new FavotireSongsController();
 
@@ -104,7 +135,9 @@ public class MusicPlayerController{
     }
 
 
-    public void addToFavoriteBtnGetClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
+    public void addToFavoriteBtnGetClicked(ActionEvent event) throws IOException, InterruptedException, JDOMException { // metodo que se activa si el boton de acceso es tocado,
+
+
         songToFvrt = String.valueOf(songplayed.get(1)); // aqui poner la variable que tiene el indice que esta reproduciendo, la de temp
 
         songToFvrt = songToFvrt.replace("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs\\", ""  );
@@ -143,46 +176,46 @@ public class MusicPlayerController{
     public void nextButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
 
         if (temp2==false) {
-            player.skipForward();
+            player.stop();
+
+            player = new MP3Player();
+            Node current = songsToList.head.getNext();
             songNumber++;
-            System.out.println(songNumber);
+            player.addToPlayList((File) current.getData() );
+            player.play();
 
         }
 
         if (temp2==true && songNumber>=3){
-            player.removeAllMP3PlayerListeners();
-            player.pause();
-
-
-            player = new MP3Player();
-            Node current = songsToList.head;
-
-            System.out.println(songNumber + "sigue cambiando");
-            while (current != null) {
-                player.addToPlayList((File) current.getData() );
-                current = current.getNext();
-                System.out.println("1");
-            }
+            System.out.println("sirve");
+            player.stop();
+            player= new MP3Player();
+            Node current= songsToList.head;
+            System.out.println(current);
+            player.addToPlayList((File) current.getData() );
             player.play();
             songNumber=0;
         }
         if(temp2==true && songNumber!=3){
-            player.skipForward();
+            player.stop();
+            player = new MP3Player();
+            Node current = songsToList.head.getNext();
             songNumber++;
-            System.out.println(songNumber + "si cambia");
+            player.addToPlayList((File) current.getData() );
+            player.play();
         }
     }
+    //Node current = head;
+    public void startPlayBtnGetPressed(ActionEvent event) throws IOException, InterruptedException, JDOMException {
 
-    public void startPlayBtnGetPressed(ActionEvent event) throws IOException, InterruptedException {
+        showtheXML();
         player = new MP3Player();
+
         Node current = songsToList.head;
 
-        while (current != null) {
+        player.addToPlayList((File) current.getData() );
 
-            player.addToPlayList((File) current.getData() );
-            current = current.getNext();
 
-        }
         playButton.setVisible(true);
         startPlayButton.setVisible(false);
         pauseButton.setVisible(true);
@@ -202,11 +235,12 @@ public class MusicPlayerController{
 
 
         if (filetoadd.renameTo(new File(targetDirectory + "\\" + filetoadd.getName()))) {
-           System.out.println("File is moved to " + targetDirectory);
+            System.out.println("File is moved to " + targetDirectory);
         } else {
             System.out.println("Failed");
         }
-        player.addToPlayList(new File(targetDirectory + "\\" + filetoadd.getName()));
+        //player.addToPlayList(new File(targetDirectory + "\\" + filetoadd.getName()));
+        songsToList.addNode(new File(targetDirectory + "\\" + filetoadd.getName()));
 
     }
 
@@ -214,13 +248,28 @@ public class MusicPlayerController{
 
 
 
-
+    File directory;
+    File[] files;
 
 
 
     public void deleteSongButtonClicked(ActionEvent event) throws IOException, InterruptedException {
+        player.stop();
+
+        Node current= songsToList.head;
+        File fileToDlt= new File(String.valueOf(current.getData()));
+        System.out.println(fileToDlt);
+
+        songsToList.remove(current);
+        songsToList.displayList();
+        player = new MP3Player();
+        current = songsToList.head;
+
+        fileToDlt.delete();
 
 
+        player.addToPlayList((File) current.getData() );
+        player.play();
 
     }
 
@@ -356,6 +405,50 @@ public class MusicPlayerController{
         }
     }
 
+    public static List<String> SongsList= new ArrayList<String>();
+    public void showtheXML() throws IOException, JDOMException {
+
+
+        SAXBuilder builder = new SAXBuilder();
+        File xml = new File("Adriel Favela X Javier Rosas  La Escuela No Me Gustó Video Oficia.xml");
+        Document document = builder.build(xml);
+        Element root = document.getRootElement();
+        List<Element> list = root.getChildren("Songs");
+
+
+        for (int i = 0; i < list.size(); i++) {
+            Element song = list.get(i);
+
+            List<Element> valores_song = song.getChildren();
+            for (int j = 0; j < valores_song.size(); j++) {
+                Element cmapo = valores_song.get(j);
+                String name = cmapo.getChildTextTrim("Name");
+                String year = cmapo.getChildTextTrim("Year");
+                String genre = cmapo.getChildTextTrim("Genre");
+                String album = cmapo.getChildTextTrim("Album");
+                String artist = cmapo.getChildTextTrim("Artist");
+                System.out.println(name + "\t" + year + "\t" + genre + "\t" + album + "\t" + artist);
+                artistNameLabel.setText(name);
+                yearLabel.setText(year);
+                genreLabel.setText(genre);
+                albumLabel.setText(album);
+                songNameLabel.setText(name);
+
+            }
+
+        }
+
+        //yearLabel.setText(SongsList.get(1));
+        //genreLabel.setText(SongsList.get(2));
+        //albumLabel.setText(SongsList.get(3));
+        //songNameLabel.setText(SongsList.get(0));
+
+        //artistNameLabel.setText(name);
+        // AQUI EDITAR LABELS CON RESPECTO A CANCION SIENDO REPRODUCIDA
+        //artistNameLabel.setText(name);
+
+    }
+
     public void userLogOut(ActionEvent event) throws IOException { // funcion log out hace lo mismo que change scene, solo que aqui cambia la escena a la primera (la del log in)
         LogInApplication m = new LogInApplication();
         m.changeScene("loginwindow.fxml");
@@ -366,5 +459,3 @@ public class MusicPlayerController{
 
 
 }
-
-

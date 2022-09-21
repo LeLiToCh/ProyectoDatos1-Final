@@ -45,11 +45,6 @@ public class FavotireSongsController extends MusicPlayerController{
     public static List<String> favoriteSongsList= new ArrayList<String>();
 
 
-    //Label Labelpromediosenproyectos = new Label("Promedio de notas en proyectos");
-    //Label Labelpromediosentareas= new Label("Nota Promedio (Examenes,Quices,Tareas)");
-    //Label Labelnotafinal = new Label("Nota Final");
-                //root.getChildren().addAll( Labelpromediosenproyectos, Labelpromediosentareas, Labelnotafinal);
-
     public void showfvrtButtonGetPressed()throws IOException, InterruptedException{
 
         txtReader();

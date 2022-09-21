@@ -39,6 +39,7 @@ public class LogInController extends DoubleLL<Node> {
 
     public static DoubleLL<Node> songsToList;
     public static String fvrSongTxt;
+    public static String userPlaylist;
 
     public void userLogIn(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
 
@@ -56,18 +57,22 @@ public class LogInController extends DoubleLL<Node> {
             m.changeScene("2ndWindow.fxml");
             user= 2;
             fvrSongTxt="C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\favoritesongsEma.txt";
+            userPlaylist= String.valueOf(new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs"));
+            System.out.println(userPlaylist);
         }
         if (username.getText().toString().equals("Emmanuel Esquivel Chavarria") && password.getText().toString().equals("310757") && email.getText().toString().equals("emesquivel@estudiantec.cr") && Provinces.getSelectionModel().getSelectedItem().equals("Guanacaste") ){ // hacemos validacion si el campo de usuario y contrasenna son los de nuestro usuarios (si estan correctos)
             TimeUnit.SECONDS.sleep(1);
             m.changeScene("2ndWindow.fxml"); // se genera el cambio de escena a la seguna ventana
             user= 2;
             fvrSongTxt="C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\favoritesongsEma.txt";
+            userPlaylist= String.valueOf(new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs"));
         }
         if (username.getText().toString().equals("Andres Madrigal Vega") && password.getText().toString().equals("2022") && email.getText().toString().equals("anmadrigalv@estudiantec.cr") && Provinces.getSelectionModel().getSelectedItem().equals("Cartago") ){ // hacemos validacion si el campo de usuario y contrasenna son los de nuestro usuarios (si estan correctos)
             TimeUnit.SECONDS.sleep(1);
             m.changeScene("2ndWindow.fxml");
             user=0;
             fvrSongTxt="C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\favoritesongsAndres.txt";
+            userPlaylist= String.valueOf(new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs1"));
         }
         if(username.getText().isEmpty() && password.getText().isEmpty()){ // si el campo esta vacio generamos un label que lo indique
             IncorrectLogIn.setText("Please type your username & password");
@@ -100,7 +105,6 @@ public class LogInController extends DoubleLL<Node> {
             }
             songsToList=songsListt;
         }
-
     }
     ArrayList<String> listtoAdd = new ArrayList<>();
 

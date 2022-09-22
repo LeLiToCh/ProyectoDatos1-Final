@@ -14,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.Scanner;
 
 
+
+
 public class LogInController extends DoubleLL<Node> {
     @FXML //instanciamos cada uno de los atributos de nuestro fxml
     private TextField username; // id para nuestro slot de nombre de usuario
@@ -43,6 +45,7 @@ public class LogInController extends DoubleLL<Node> {
     public static DoubleLL<Node> songsToList;
     public static String fvrSongTxt;
     public static String userPlaylist;
+    public static String userr;
 
 
 
@@ -56,32 +59,38 @@ public class LogInController extends DoubleLL<Node> {
     private void clickLogin() throws IOException, InterruptedException, ParserConfigurationException, TransformerException, JDOMException { // metodo que hace las validaciones, entre ellas: contrasenna y usuario correcto o no de los diferentes usuarios, ademas del cambio de escena.
 
         LogInApplication m = new LogInApplication();
-        XMLController t = new XMLController();
+       // XMLController t = new XMLController();
         //ShowXML n = new ShowXML();
         //n.showXML();
-        t.XMLCreator();
+        //t.XMLCreator();
         // borrar este condicional antes de enviar, simplemente este es para acceso mas facil y hacer pruebas
         if (username.getText().toString().equals("1") && password.getText().toString().equals("1") && email.getText().toString().equals("1") && Provinces.getSelectionModel().getSelectedItem().equals("Guanacaste") ){ // hacemos validacion si el campo de usuario y contrasenna son los de nuestro usuarios (si estan correctos)
             TimeUnit.SECONDS.sleep(1);
-            m.changeScene("2ndWindow.fxml");
+            m.changeScene("playlistwindow.fxml");
             user= 2;
             fvrSongTxt="C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\favoritesongsEma.txt";
             userPlaylist= String.valueOf(new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs"));
             System.out.println(userPlaylist);
+            userr= "1";
+
+
+
         }
         if (username.getText().toString().equals("Emmanuel Esquivel Chavarria") && password.getText().toString().equals("310757") && email.getText().toString().equals("emesquivel@estudiantec.cr") && Provinces.getSelectionModel().getSelectedItem().equals("Guanacaste") ){ // hacemos validacion si el campo de usuario y contrasenna son los de nuestro usuarios (si estan correctos)
             TimeUnit.SECONDS.sleep(1);
-            m.changeScene("2ndWindow.fxml"); // se genera el cambio de escena a la seguna ventana
+            m.changeScene("playlistwindow.fxml"); // se genera el cambio de escena a la seguna ventana
             user= 2;
             fvrSongTxt="C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\favoritesongsEma.txt";
             userPlaylist= String.valueOf(new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs"));
+            userr="Emmanuel Esquivel Chavarria";
         }
         if (username.getText().toString().equals("Andres Madrigal Vega") && password.getText().toString().equals("2022") && email.getText().toString().equals("anmadrigalv@estudiantec.cr") && Provinces.getSelectionModel().getSelectedItem().equals("Cartago") ){ // hacemos validacion si el campo de usuario y contrasenna son los de nuestro usuarios (si estan correctos)
             TimeUnit.SECONDS.sleep(1);
-            m.changeScene("2ndWindow.fxml");
+            m.changeScene("playlistwindow.fxml");
             user=0;
             fvrSongTxt="C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\favoritesongsAndres.txt";
             userPlaylist= String.valueOf(new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs1"));
+            userr= "Andres Madrigal Vega";
         }
         if(username.getText().isEmpty() && password.getText().isEmpty()){ // si el campo esta vacio generamos un label que lo indique
             IncorrectLogIn.setText("Please type your username & password");

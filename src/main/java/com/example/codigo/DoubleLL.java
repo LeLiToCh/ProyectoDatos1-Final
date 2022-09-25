@@ -24,9 +24,6 @@ public class DoubleLL<N> {
 
 
 
-
-
-
     //DoubleLL canciones= LogInController.usedFiles();
 
     //add a node to the list
@@ -100,5 +97,20 @@ public class DoubleLL<N> {
 
     public Object getNext() {
         return this.next;
+    }
+    void deleteAllNodes() {
+
+        //1. create a temp node
+        Node temp = new Node(this.tail);
+
+        //2. if the head is not null make temp as head and
+        //   move head to head next, then delete the temp,
+        //   continue the process till head becomes null
+        while(this.head != null) {
+            temp = this.head;
+            this.head = this.head.next;
+            temp = null;
+        }
+
     }
 }

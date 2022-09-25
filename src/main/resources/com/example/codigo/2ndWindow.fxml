@@ -16,9 +16,9 @@
    <Button fx:id="volumeDownButton" layoutX="315.0" layoutY="208.0" mnemonicParsing="false" onAction="#volumeDownButtonClicked" text="Volume Down" />
    <Button fx:id="volumeUpButton" layoutX="203.0" layoutY="208.0" mnemonicParsing="false" onAction="#volumeUpButtonClicked" text="Volume Up" />
    <Button fx:id="playButton" layoutX="64.0" layoutY="208.0" mnemonicParsing="false" onAction="#playButtonClicked" text="Play" visible="false" />
-   <Button fx:id="logoutbutton" layoutX="522.0" layoutY="15.0" mnemonicParsing="false" onAction="#userLogOut" text="Log Out" textAlignment="JUSTIFY">
+   <Button fx:id="logoutbutton" layoutX="484.0" layoutY="13.0" mnemonicParsing="false" onAction="#userLogOut" prefHeight="21.0" prefWidth="105.0" text="Go Back To Playlists" textAlignment="JUSTIFY">
       <font>
-         <Font name="System Italic" size="14.0" />
+         <Font name="System Italic" size="9.0" />
       </font>
    </Button>
    <Label layoutX="217.0" layoutY="30.0" text="EA Music Player">
@@ -82,4 +82,6 @@
          <Font size="10.0" />
       </font>
    </Label>
+   <Label fx:id="warningLabel" layoutX="120.0" layoutY="103.0" prefHeight="43.0" prefWidth="361.0" text="Dear user your playlist is empty please choose another playlist!" textFill="RED" visible="false" />
+   <Button fx:id="warningButton" layoutX="227.0" layoutY="179.0" mnemonicParsing="false" onAction="#userLogOut" prefHeight="43.0" prefWidth="148.0" text="Go Back To Playlists" visible="false" />
 </AnchorPane>

@@ -39,6 +39,9 @@ import static com.example.codigo.LogInController.*;
 
 
 public class MusicPlayerController{
+
+    @FXML
+    public Button logoutbutton;
     @FXML
     public Label songName;
     @FXML
@@ -79,10 +82,13 @@ public class MusicPlayerController{
     private Label genreLabel;
     @FXML
     private Label albumLabel;
-
-
     public String songToFvrt;
     public Node songToRmv;
+    @FXML
+    public Button warningButton;
+    @FXML
+    public Label warningLabel;
+
     //public Node canciones = null;
     //LogInController see=new LogInController();
     //FavotireSongsController fvrt= new FavotireSongsController();
@@ -138,7 +144,7 @@ public class MusicPlayerController{
     public void addToFavoriteBtnGetClicked(ActionEvent event) throws IOException, InterruptedException, JDOMException { // metodo que se activa si el boton de acceso es tocado,
 
 
-        songToFvrt = String.valueOf(songplayed.get(1)); // aqui poner la variable que tiene el indice que esta reproduciendo, la de temp
+        songToFvrt = String.valueOf(songplayed.get(songNumber)); // aqui poner la variable que tiene el indice que esta reproduciendo, la de temp
 
         songToFvrt = songToFvrt.replace("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs\\", ""  );
         System.out.println(songToFvrt);
@@ -208,17 +214,41 @@ public class MusicPlayerController{
     //Node current = head;
     public void startPlayBtnGetPressed(ActionEvent event) throws IOException, InterruptedException, JDOMException {
 
-        showtheXML();
+        try {
+            player.stop();
+        }
+        catch(Exception y){
+            System.out.println("el reproductor aun no tenia canciones");
+            }
         player = new MP3Player();
+        showtheXML();
 
         Node current = songsToList.head;
+        try {
+            player.addToPlayList((File) current.getData());
+            playButton.setVisible(true);
+            startPlayButton.setVisible(false);
+            pauseButton.setVisible(true);
 
-        player.addToPlayList((File) current.getData() );
+        }catch(Exception i){
+            System.out.println("no existe el playlist");
+            playButton.setVisible(false);
+            startPlayButton.setVisible(false);
+            pauseButton.setVisible(false);
+            volumeDownButton.setVisible(false);
+            volumeUpButton.setVisible(false);
+            previousButton.setVisible(false);
+            nextButton.setVisible(false);
+            logoutbutton.setVisible(false);
+            warningButton.setVisible(true);
+            warningLabel.setVisible(true);
+            addSongButton.setVisible(false);
+            addToFavoriteBtn.setVisible(false);
+            showFavoriteBtn.setVisible(false);
+            continueRepButton.setVisible(false);
+        }
 
 
-        playButton.setVisible(true);
-        startPlayButton.setVisible(false);
-        pauseButton.setVisible(true);
         //System.out.println(songplayed);
 
     }
@@ -451,9 +481,15 @@ public class MusicPlayerController{
 
     public void userLogOut(ActionEvent event) throws IOException { // funcion log out hace lo mismo que change scene, solo que aqui cambia la escena a la primera (la del log in)
         LogInApplication m = new LogInApplication();
-        m.changeScene("loginwindow.fxml");
-        player.pause();
-        playButton.setDisable(false);
+        m.changeScene("playlistwindow.fxml");
+        try {
+            player.pause();
+            playButton.setDisable(false);
+            player = new MP3Player();
+        }catch (Exception e){
+            System.out.println("Se ha cambiado la escena");
+        }
+
     }
 
 

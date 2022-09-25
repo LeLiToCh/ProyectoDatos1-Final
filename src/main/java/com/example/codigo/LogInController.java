@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.Scanner;
 
-
+import static com.example.codigo.WriteTXT.userPlaylistsToChoose;
 
 
 public class LogInController extends DoubleLL<Node> {
@@ -46,7 +46,7 @@ public class LogInController extends DoubleLL<Node> {
     public static String fvrSongTxt;
     public static String userPlaylist;
     public static String userr;
-
+    public static File userPlaylistpath;
 
 
     public void userLogIn(ActionEvent event) throws IOException, InterruptedException, ParserConfigurationException, TransformerException, JDOMException { // metodo que se activa si el boton de acceso es tocado,
@@ -59,6 +59,7 @@ public class LogInController extends DoubleLL<Node> {
     private void clickLogin() throws IOException, InterruptedException, ParserConfigurationException, TransformerException, JDOMException { // metodo que hace las validaciones, entre ellas: contrasenna y usuario correcto o no de los diferentes usuarios, ademas del cambio de escena.
 
         LogInApplication m = new LogInApplication();
+
        // XMLController t = new XMLController();
         //ShowXML n = new ShowXML();
         //n.showXML();
@@ -69,10 +70,12 @@ public class LogInController extends DoubleLL<Node> {
             m.changeScene("playlistwindow.fxml");
             user= 2;
             fvrSongTxt="C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\favoritesongsEma.txt";
-            userPlaylist= String.valueOf(new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs"));
+            //userPlaylist= String.valueOf(new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs"));
             System.out.println(userPlaylist);
             userr= "1";
+            userPlaylistpath= new File(("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Emmanuel Playlists.txt"));
 
+            //userPlaylist= userPlaylistsToChoose.toString();
 
 
         }
@@ -83,6 +86,8 @@ public class LogInController extends DoubleLL<Node> {
             fvrSongTxt="C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\favoritesongsEma.txt";
             userPlaylist= String.valueOf(new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs"));
             userr="Emmanuel Esquivel Chavarria";
+            userPlaylistpath= new File(("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Emmanuel Playlists.txt"));
+
         }
         if (username.getText().toString().equals("Andres Madrigal Vega") && password.getText().toString().equals("2022") && email.getText().toString().equals("anmadrigalv@estudiantec.cr") && Provinces.getSelectionModel().getSelectedItem().equals("Cartago") ){ // hacemos validacion si el campo de usuario y contrasenna son los de nuestro usuarios (si estan correctos)
             TimeUnit.SECONDS.sleep(1);
@@ -91,37 +96,14 @@ public class LogInController extends DoubleLL<Node> {
             fvrSongTxt="C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\favoritesongsAndres.txt";
             userPlaylist= String.valueOf(new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs1"));
             userr= "Andres Madrigal Vega";
+            userPlaylistpath= new File(("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Andres Playlists.txt"));
+
         }
         if(username.getText().isEmpty() && password.getText().isEmpty()){ // si el campo esta vacio generamos un label que lo indique
             IncorrectLogIn.setText("Please type your username & password");
         }
         else { // este condicional se activaria si y solo si algunos de los dos (contrasenna y usuario) o ambos estan malos, generando un label que lo indique.
             IncorrectLogIn.setText("Wrong username or password");
-        }
-        if (user==2) {
-            songsListt.songsList = new DoubleLL<Node>();
-            directory = new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs");
-            files = directory.listFiles();
-            if (files != null) {
-                for (File archivo : files) {
-                    songsListt.addNode(archivo);
-                    songplayed.add(archivo);
-                }
-            }
-            songsToList=songsListt;
-            songsListt.displayList();
-            System.out.println(songplayed);
-        }
-        if(user==0){
-            songsListt.songsList = new DoubleLL<Node>();
-            directory= new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs1");
-            files = directory.listFiles();
-            if (files != null) {
-                for (File archivo : files) {
-                    songsListt.addNode(archivo);
-                }
-            }
-            songsToList=songsListt;
         }
     }
     ArrayList<String> listtoAdd = new ArrayList<>();

@@ -35,7 +35,8 @@ import java.util.List;
 
 
 import static com.example.codigo.LogInController.*;
-
+import static com.example.codigo.PlayListWindowController.*;
+import static com.example.codigo.WriteTXT.userPlaylistsToChoose;
 
 
 public class MusicPlayerController{
@@ -87,8 +88,12 @@ public class MusicPlayerController{
     @FXML
     public Button warningButton;
     @FXML
+    public Label cuntinueRepLabel;
+    @FXML
     public Label warningLabel;
-
+    public String userPlaylistssongTXT;
+    public Button editDataBtn;
+    public static String tmp;
     //public Node canciones = null;
     //LogInController see=new LogInController();
     //FavotireSongsController fvrt= new FavotireSongsController();
@@ -106,62 +111,135 @@ public class MusicPlayerController{
     public void volumeDownButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
         volumeDownControl(0.2);                                                                   // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
     }
+    public void editDataBtnGetClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
+        LogInApplication m = new LogInApplication();
+        m.changeScene("edtiddata.fxml");
+        try {
+            player.pause();
+            playButton.setDisable(false);
+        }catch(Exception a){
+            System.out.println("");
+        }
+    }
 
-    public void previousButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
-        // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
-        if (temp2==false) {
+    public void previousButtonClicked(ActionEvent event) throws IOException, InterruptedException, JDOMException { // metodo que se activa si el boton de acceso es tocado,
+        if (temp2== false && songNumber==0){
+            cuntinueRepLabel.setVisible(true);
+            System.out.println(songNumber);
+        }
+        if (temp2==false && songNumber!=0) {
+            cuntinueRepLabel.setVisible(false);
             player.skipBackward();
             songNumber--;
+            System.out.println("temp de momento false");
+            tmp = userPlaylistsSongs.get(songNumber);
+            tmp = tmp.replace("\\"+PlaylistName, "");
+            tmp = tmp.replace(".mp3", ".xml");
+            System.out.println("-----------------");
+            System.out.println(tmp);
+            System.out.println("-----------------");
+            showtheXML(tmp); // aqui cambiar a txt
             System.out.println(songNumber);
-            System.out.println("holaaaaaa");
         }
-
         if (temp2==true && songNumber==0){
-            player.stop();
-            player.removeAll();
-
-            Node current = songsToList.tail;
-
-            System.out.println(songNumber + "sigue cambiando");
-            while (current != null) {
-                player.addToPlayList((File) current.getData() );
-                current = current.getNext();
-            }
-            player.play();
-            songNumber=0;
+            //player.skipBackward();
+            System.out.println("temp de momento true");
+            tmp = userPlaylistsSongs.get(songNumber);
+            tmp = tmp.replace("\\"+PlaylistName, "");
+            tmp = tmp.replace(".mp3", ".xml");
+            System.out.println("-----------------");
+            System.out.println(tmp);
+            System.out.println("-----------------");
+            showtheXML(tmp); // aqui cambiar a txt
+            songNumber= userPlaylistsSongs.size();
+            System.out.println(songNumber);
         }
-        if(temp2==true && songNumber!=3){
+        if(temp2==true && songNumber!=0){
+            player.skipBackward();
+            songNumber--;
+            System.out.println("temp de momento true");
+            tmp = userPlaylistsSongs.get(songNumber);
+            tmp = tmp.replace("\\"+PlaylistName, "");
+            tmp = tmp.replace(".mp3", ".xml");
+            System.out.println("-----------------");
+            System.out.println(tmp);
+            System.out.println("-----------------");
+            showtheXML(tmp); // aqui cambiar a txt
+            System.out.println(songNumber);
+        }
+    }
+    int len = userPlaylistsSongs.size()-1;
+
+
+    public void nextButtonClicked(ActionEvent event) throws IOException, JDOMException { // metodo que se activa si el boton de acceso es tocado,
+        if (temp2== false && songNumber==len){
+            cuntinueRepLabel.setVisible(true);
+            System.out.println(songNumber);
+        }
+        if (temp2==false && songNumber!=len) {
+            cuntinueRepLabel.setVisible(false);
             player.skipForward();
             songNumber++;
-            System.out.println(songNumber + "si cambia");
+            System.out.println("temp de momento false");
+            tmp = userPlaylistsSongs.get(songNumber);
+            tmp = tmp.replace("\\"+PlaylistName, "");
+            tmp = tmp.replace(".mp3", ".xml");
+            System.out.println("-----------------");
+            System.out.println(tmp);
+            System.out.println("-----------------");
+            showtheXML(tmp); // aqui cambiar a txt
+            System.out.println(songNumber);
         }
-        player.skipBackward();
-        songNumber--;
+        if (temp2==true && songNumber==len){
+            //player.skipBackward();
+            cuntinueRepLabel.setVisible(false);
+            System.out.println("temp de momento true");
+            tmp = userPlaylistsSongs.get(songNumber);
+            tmp = tmp.replace("\\"+PlaylistName, "");
+            tmp = tmp.replace(".mp3", ".xml");
+            System.out.println("-----------------");
+            System.out.println(tmp);
+            System.out.println("-----------------");
+            showtheXML(tmp); // aqui cambiar a txt
+            songNumber= -1;
+            System.out.println(songNumber);
+        }
+        if(temp2==true && songNumber!=len){
+            player.skipForward();
+            cuntinueRepLabel.setVisible(false);
+            songNumber++;
+            System.out.println("temp de momento true");
+            tmp = userPlaylistsSongs.get(songNumber);
+            tmp = tmp.replace("\\"+PlaylistName, "");
+            tmp = tmp.replace(".mp3", ".xml");
+            System.out.println("-----------------");
+            System.out.println(tmp);
+            System.out.println("-----------------");
+            showtheXML(tmp); // aqui cambiar a txt
+            System.out.println(songNumber);
+        }
 
     }
 
 
     public void addToFavoriteBtnGetClicked(ActionEvent event) throws IOException, InterruptedException, JDOMException { // metodo que se activa si el boton de acceso es tocado,
 
+        songToFvrt = String.valueOf(userPlaylistsSongs.get(songNumber)); // aqui poner la variable que tiene el indice que esta reproduciendo, la de temp
 
-        songToFvrt = String.valueOf(songplayed.get(songNumber)); // aqui poner la variable que tiene el indice que esta reproduciendo, la de temp
-
-        songToFvrt = songToFvrt.replace("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs\\", ""  );
+        songToFvrt = songToFvrt.replace(chosenplaylist+"\\", ""  );
         System.out.println(songToFvrt);
         try
         {
             String filePath = fvrSongTxt;
             FileWriter fw = new FileWriter(filePath, true);
             String lineToAppend = songToFvrt;
-            fw.write(lineToAppend);
+            fw.write("\n"+lineToAppend);
             fw.close();
         }
         catch(Exception e)
         {
             System.out.println(e);
         }
-
-
 
     }
     public void showFavoriteBtnGetPressed(ActionEvent event) throws IOException,InterruptedException{
@@ -177,43 +255,8 @@ public class MusicPlayerController{
     public static List<String> favoriteSongsList= new ArrayList<String>();
 
 
-
-    //DoubleLL canciones= LogInController.usedFiles();
-    public void nextButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
-
-        if (temp2==false) {
-            player.stop();
-
-            player = new MP3Player();
-            Node current = songsToList.head.getNext();
-            songNumber++;
-            player.addToPlayList((File) current.getData() );
-            player.play();
-
-        }
-
-        if (temp2==true && songNumber>=3){
-            System.out.println("sirve");
-            player.stop();
-            player= new MP3Player();
-            Node current= songsToList.head;
-            System.out.println(current);
-            player.addToPlayList((File) current.getData() );
-            player.play();
-            songNumber=0;
-        }
-        if(temp2==true && songNumber!=3){
-            player.stop();
-            player = new MP3Player();
-            Node current = songsToList.head.getNext();
-            songNumber++;
-            player.addToPlayList((File) current.getData() );
-            player.play();
-        }
-    }
-    //Node current = head;
     public void startPlayBtnGetPressed(ActionEvent event) throws IOException, InterruptedException, JDOMException {
-
+        //Write2();
         try {
             player.stop();
         }
@@ -221,11 +264,22 @@ public class MusicPlayerController{
             System.out.println("el reproductor aun no tenia canciones");
             }
         player = new MP3Player();
-        showtheXML();
+        tmp = userPlaylistsSongs.get(songNumber);
+        tmp = tmp.replace("\\"+PlaylistName, "");
+        tmp = tmp.replace(".mp3", ".xml");
+        System.out.println("-----------------");
+        System.out.println(tmp);
+        System.out.println("-----------------");
+        showtheXML(tmp); // aqui cambiar a txt
 
-        Node current = songsToList.head;
+        // current = songsToList.head;
         try {
-            player.addToPlayList((File) current.getData());
+            Node current = songsToList.head;
+            while (current != null) {
+                player.addToPlayList((File) current.getData());
+                current = current.getNext();
+            }
+
             playButton.setVisible(true);
             startPlayButton.setVisible(false);
             pauseButton.setVisible(true);
@@ -253,57 +307,106 @@ public class MusicPlayerController{
 
     }
     public void addSongButtonClicked(ActionEvent event) throws IOException, InterruptedException {
-
+        player.stop();
+        pauseButton.setDisable(true);
+        playButton.setDisable(false);
         FileChooser songToAdd = new FileChooser();
         String selection = String.valueOf(songToAdd.showOpenDialog(null));
         File filetoadd = new File(selection);
         System.out.println(filetoadd);
-
-
-
-        File targetDirectory = new File(userPlaylist);
-
-
+        File targetDirectory = new File(chosenplaylist);
+        File chosensong= new File(targetDirectory+filetoadd.getName());
+        player.addToPlayList(chosensong);
+        userPlaylistsSongs.add(String.valueOf(chosensong));
         if (filetoadd.renameTo(new File(targetDirectory + "\\" + filetoadd.getName()))) {
             System.out.println("File is moved to " + targetDirectory);
         } else {
             System.out.println("Failed");
         }
-        //player.addToPlayList(new File(targetDirectory + "\\" + filetoadd.getName()));
-        songsToList.addNode(new File(targetDirectory + "\\" + filetoadd.getName()));
+        //File song= new File(selection);
+        try{
+            songsListt.songsList.deleteAllNodes();
+
+        }catch (Exception q){
+
+            System.out.println("La DLL estaba vacia");
+        }
+        userPlaylistsSongs= new ArrayList<>();
+        songsListt.songsList = new DoubleLL<Node>();
+        directory = new File(chosenplaylist); //aqui tendria que ir la direccion de la playlist numero 1 de mi usuario luego hago metodo que lea txt
+        files = directory.listFiles();
+        if (files != null) {
+            for (File archivo : files) {
+                songsListt.addNode(archivo);
+                songplayed.add(archivo);
+                userPlaylistsSongs.add(String.valueOf(archivo));
+            }
+        }
+        player = new MP3Player();
+        Node current = songsToList.head;
+        while (current != null) {
+            player.addToPlayList((File) current.getData());
+            current = current.getNext();
+        }
+
+        playButton.setVisible(true);
+        startPlayButton.setVisible(false);
+        pauseButton.setVisible(true);
+        System.out.println("------------------------------");
+        System.out.println(userPlaylistsSongs);
+        System.out.println("------------------------------");
+        songNumber = 0;
 
     }
-
-
-
-
 
     File directory;
     File[] files;
-
-
+    public File filetocreatee2;
 
     public void deleteSongButtonClicked(ActionEvent event) throws IOException, InterruptedException {
+        System.out.println(userPlaylistsSongs + "aqui busco pa borrar");
         player.stop();
+        File rn = new File(userPlaylistsSongs.get(songNumber)); // cuando tenga el txt con el playlist nada mas poner el url de la cancion que se este tocando
+        System.out.println(rn + "esto es lo q seleccione");
+        rn.delete();
 
-        Node current= songsToList.head;
-        File fileToDlt= new File(String.valueOf(current.getData()));
-        System.out.println(fileToDlt);
 
-        songsToList.remove(current);
-        songsToList.displayList();
+        try{
+            songsListt.songsList.deleteAllNodes();
+
+        }catch (Exception q){
+
+            System.out.println("La DLL estaba vacia");
+
+        }
+        userPlaylistsSongs= new ArrayList<>();
+        songsListt.songsList = new DoubleLL<Node>();
+        directory = new File(chosenplaylist); //aqui tendria que ir la direccion de la playlist numero 1 de mi usuario luego hago metodo que lea txt
+        files = directory.listFiles();
+        if (files != null) {
+            for (File archivo : files) {
+                songsListt.addNode(archivo);
+                songplayed.add(archivo);
+                userPlaylistsSongs.add(String.valueOf(archivo));
+            }
+        }
         player = new MP3Player();
-        current = songsToList.head;
+        Node current = songsToList.head;
+        while (current != null) {
+            player.addToPlayList((File) current.getData());
+            current = current.getNext();
+        }
 
-        fileToDlt.delete();
-
-
-        player.addToPlayList((File) current.getData() );
+        playButton.setVisible(true);
+        startPlayButton.setVisible(false);
+        pauseButton.setVisible(true);
         player.play();
+        System.out.println("---------------------------");
+        System.out.println(userPlaylistsSongs);
+        System.out.println("---------------------------");
+        songNumber = 0;
 
     }
-
-
 
 
     MP3Player player;
@@ -313,9 +416,13 @@ public class MusicPlayerController{
     public void continueRepButtonClicked(ActionEvent event) throws IOException, InterruptedException {
         if (temp2==false) {
             temp2 = true;
+            System.out.println(temp2);
+            player.setRepeat(true);
         }
         else{
+            player.setRepeat(false);
             temp2=false;
+            System.out.println(temp2);
         }
     }
 
@@ -419,6 +526,7 @@ public class MusicPlayerController{
             playButton.setDisable(true);
 
         }
+        System.out.println(player.getUI());
     }
 
     public void pauseBtnClicked() {
@@ -436,11 +544,11 @@ public class MusicPlayerController{
     }
 
     public static List<String> SongsList= new ArrayList<String>();
-    public void showtheXML() throws IOException, JDOMException {
+    public void showtheXML(String songNamee) throws IOException, JDOMException {
 
 
         SAXBuilder builder = new SAXBuilder();
-        File xml = new File("Adriel Favela X Javier Rosas  La Escuela No Me Gustó Video Oficia.xml");
+        File xml = new File(songNamee);
         Document document = builder.build(xml);
         Element root = document.getRootElement();
         List<Element> list = root.getChildren("Songs");
@@ -458,7 +566,7 @@ public class MusicPlayerController{
                 String album = cmapo.getChildTextTrim("Album");
                 String artist = cmapo.getChildTextTrim("Artist");
                 System.out.println(name + "\t" + year + "\t" + genre + "\t" + album + "\t" + artist);
-                artistNameLabel.setText(name);
+                artistNameLabel.setText(artist);
                 yearLabel.setText(year);
                 genreLabel.setText(genre);
                 albumLabel.setText(album);
@@ -491,6 +599,54 @@ public class MusicPlayerController{
         }
 
     }
+
+
+
+
+
+
+    //public static List<String> userPlaylistsSongs= new ArrayList<>();
+    /*
+    public static void Write2() {
+        userPlaylistsSongs= new ArrayList<>();
+        String tmpp=String.valueOf(chosenplaylist);
+        String userPlaylistpathtxt= tmpp.replace("\\Songs","\\Songs.txt");
+        File archivo = null;
+        FileReader fr = null;
+        BufferedReader br = null;
+
+        try {
+            // Apertura del fichero y creacion de BufferedReader para poder
+            // hacer una lectura comoda (disponer del metodo readLine()).
+            archivo = new File (String.valueOf(userPlaylistpathtxt));
+            fr = new FileReader (archivo);
+            br = new BufferedReader(fr);
+
+            // Lectura del fichero
+            String linea;
+            while((linea=br.readLine())!=null) {
+                //System.out.println(linea );
+                userPlaylistsSongs.add(linea);
+            }
+            System.out.println(userPlaylistsSongs + "cuando se corre en el write txt");
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            // En el finally cerramos el fichero, para asegurarnos
+            // que se cierra tanto si
+            // una excepcion.
+            try{
+                if( null != fr ){
+                    fr.close();
+                }
+            }catch (Exception e2){
+                e2.printStackTrace();
+            }
+        }
+    }*/
+
 
 
 

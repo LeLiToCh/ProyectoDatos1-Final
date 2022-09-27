@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #807e7e;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.codigo.EditDataController">
+   <children>
+      <Label layoutX="202.0" layoutY="14.0" prefHeight="45.0" prefWidth="196.0" text="Edit Your Data">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="134.0" layoutY="59.0" prefHeight="19.0" prefWidth="125.0" text="New Song Name" />
+      <Label layoutX="134.0" layoutY="104.0" prefHeight="19.0" prefWidth="125.0" text="New Artist Name" />
+      <Label layoutX="134.0" layoutY="148.0" prefHeight="19.0" prefWidth="125.0" text="New Year of Release" />
+      <Label layoutX="134.0" layoutY="192.0" prefHeight="17.0" prefWidth="156.0" text="New Genre of The Song" />
+      <Label layoutX="134.0" layoutY="240.0" prefHeight="17.0" prefWidth="125.0" text="New Album Name" />
+      <TextField fx:id="newSongNameTextField" layoutX="138.0" layoutY="78.0" promptText="Song Name" />
+      <TextField fx:id="newArtistNameTextField" layoutX="138.0" layoutY="123.0" promptText="Artist Name" />
+      <TextField fx:id="newYearTextField" layoutX="138.0" layoutY="167.0" promptText="Year" />
+      <TextField fx:id="newGenreTextField" layoutX="138.0" layoutY="209.0" promptText="Genre" />
+      <TextField fx:id="newAlbumNameTextField" layoutX="138.0" layoutY="257.0" promptText="Album Name" />
+      <Button fx:id="goBackBtn" layoutX="534.0" layoutY="361.0" mnemonicParsing="false" onAction="#goBackBtnGetClicked" text="Go Back" />
+      <Button fx:id="saveBtn" layoutX="150.0" layoutY="290.0" mnemonicParsing="false" onAction="#saveBtnGetClicked" prefHeight="25.0" prefWidth="125.0" text="Save " />
+   </children>
+</Pane>

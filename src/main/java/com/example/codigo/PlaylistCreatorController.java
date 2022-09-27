@@ -67,6 +67,19 @@ public class PlaylistCreatorController {
     }
 
 
+    /*
+    nota esto lo pongo donde se crea el playslist para eso hago estos imports
+    import java.time.LocalDate;
+    import java.time.LocalTime;
 
+    luego esto lo pongo en la parte de cuando el playlist se creo
+       LocalTime localTime = LocalTime.now();
+    LocalDate localDate = LocalDate.now()
+    esta variable la lugardo en un string
+    y luego eso lo guardo en un label y lo contcateno a la carga de mi playlist
+     ojo solo lo concateno a la parte nueva porque las otras tienen otra fecha
+     para cada playlist guardo la fecha en una variable diferente para que asi queden guardadas
+      si quiero en el metodo que me escribe la info al user playslists podria tambien concatenar la fecha
+     */
 
 }

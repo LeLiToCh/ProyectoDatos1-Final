@@ -5,6 +5,7 @@ module com.example.codigo {
     requires jaco.mp3.player;
     requires org.jetbrains.annotations;
     requires jdom2;
+    requires com.fazecast.jSerialComm;
 
 
     opens com.example.codigo to javafx.fxml;

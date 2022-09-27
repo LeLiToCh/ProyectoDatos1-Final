@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 //import static com.example.codigo.LogInController.userr;
 import static com.example.codigo.LogInController.*;
@@ -34,7 +35,15 @@ public class PlayListWindowController extends LogInController{
     private Label labeluserplaylist4;
     @FXML
     private Button createPlaylistBtn;
+    public static String chosenplaylist;
     LogInApplication m = new LogInApplication();
+    public static List<String> userPlaylistsSongs= new ArrayList<>();
+
+    public static String tmp;
+    public static String tmp2;
+    public static String tmp3;
+    public static String tmp4;
+    public static String PlaylistName;
 
     public void setnameoftheuser(){
         userName.setText(userr);
@@ -58,6 +67,7 @@ public class PlayListWindowController extends LogInController{
                 for (File archivo : files) {
                     songsListt.addNode(archivo);
                     songplayed.add(archivo);
+                    userPlaylistsSongs.add(String.valueOf(archivo));
                 }
             }
             songsToList = songsListt;
@@ -72,6 +82,11 @@ public class PlayListWindowController extends LogInController{
                 m.changeScene("2ndWindow.fxml");
 
             }
+            chosenplaylist= userPlaylistsToChoose.get(0);
+        System.out.println("--------------------------------------------");
+        System.out.println(userPlaylistsSongs);
+        System.out.println("--------------------------------------------");
+        PlaylistName=tmp;
     }
     public void labeluserplaylist2GetPressed(MouseEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
         try{
@@ -88,6 +103,7 @@ public class PlayListWindowController extends LogInController{
             for (File archivo : files) {
                 songsListt.addNode(archivo);
                 songplayed.add(archivo);
+                userPlaylistsSongs.add(String.valueOf(archivo));
             }
         }
         songsToList = songsListt;
@@ -102,7 +118,8 @@ public class PlayListWindowController extends LogInController{
             m.changeScene("2ndWindow.fxml");
 
         }
-
+        chosenplaylist= userPlaylistsToChoose.get(1);
+        PlaylistName=tmp2;
     }
     public void labeluserplaylist3GetPressed(MouseEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
 
@@ -114,6 +131,7 @@ public class PlayListWindowController extends LogInController{
                 for (File archivo : files) {
                     songsListt.addNode(archivo);
                     songplayed.add(archivo);
+                    userPlaylistsSongs.add(String.valueOf(archivo));
                 }
             }
             songsToList = songsListt;
@@ -132,7 +150,8 @@ public class PlayListWindowController extends LogInController{
             m.changeScene("2ndWindow.fxml");
 
         }
-
+        chosenplaylist= userPlaylistsToChoose.get(2);
+        PlaylistName=tmp3;
     }
     public void labeluserplaylist4GetPressed(MouseEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
 
@@ -143,6 +162,7 @@ public class PlayListWindowController extends LogInController{
             for (File archivo : files) {
                 songsListt.addNode(archivo);
                 songplayed.add(archivo);
+                userPlaylistsSongs.add(String.valueOf(archivo));
             }
         }
         songsToList = songsListt;
@@ -158,7 +178,8 @@ public class PlayListWindowController extends LogInController{
             m.changeScene("2ndWindow.fxml");
 
         }
-
+        chosenplaylist= userPlaylistsToChoose.get(3);
+        PlaylistName=tmp4;
     }
 
     public void loadPlaylistsBtnGetPressed(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
@@ -166,16 +187,16 @@ public class PlayListWindowController extends LogInController{
         WriteTXT.Write();
         setnameoftheuser();
         try {
-            String tmp = userPlaylistsToChoose.get(0);
+            tmp = userPlaylistsToChoose.get(0);
             tmp = tmp.replace("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\", "");
             labeluserplaylist1.setText(tmp);
-            String tmp2 = userPlaylistsToChoose.get(1);
+            tmp2 = userPlaylistsToChoose.get(1);
             tmp2 = tmp2.replace("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\", "");
             labeluserplaylist2.setText(tmp2);
-            String tmp3 = userPlaylistsToChoose.get(2);
+            tmp3 = userPlaylistsToChoose.get(2);
             tmp3 = tmp3.replace("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\", "");
             labeluserplaylist3.setText(tmp3);
-            String tmp4 = userPlaylistsToChoose.get(3);
+            tmp4 = userPlaylistsToChoose.get(3);
             tmp4 = tmp4.replace("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\", "");
             labeluserplaylist4.setText(tmp4);
         }catch (Exception l){
@@ -191,7 +212,6 @@ public class PlayListWindowController extends LogInController{
         labeluserplaylist4.setDisable(false);
         loadPlaylistsBtn.setVisible(false);
         createPlaylistBtn.setVisible(true);
-
     }
 
     public void createPlaylistBtnGetPressed(ActionEvent event) throws IOException, InterruptedException {

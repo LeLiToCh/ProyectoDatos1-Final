@@ -14,7 +14,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 
 public class XMLController {
-    public void XMLCreator() throws ParserConfigurationException, TransformerException {
+    public static void XMLCreator(String TXTPath, String NewName,String NewArtist, String NewYear, String NewGenre,String NewAlbum) throws ParserConfigurationException, TransformerException {
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -29,27 +29,27 @@ public class XMLController {
         Element songs = documento.createElement("Song");
 
         Element songsName = documento.createElement("Name");
-        Text textName=documento.createTextNode("MOJA TOTO");
+        Text textName=documento.createTextNode(NewName);
         songsName.appendChild(textName);
         songs.appendChild(songsName);
 
         Element artistName = documento.createElement("Artist");
-        Text textartistName=documento.createTextNode("Dowba Montana x El Cherry Scom");
+        Text textartistName=documento.createTextNode(NewArtist);
         artistName.appendChild(textartistName);
         songs.appendChild(artistName);
 
         Element songsYear = documento.createElement("Year");
-        Text textYear=documento.createTextNode("2022");
+        Text textYear=documento.createTextNode(NewYear);
         songsYear.appendChild(textYear);
         songs.appendChild(songsYear);
 
         Element songsGenre = documento.createElement("Genre");
-        Text textGenre=documento.createTextNode("Dembow");
+        Text textGenre=documento.createTextNode(NewGenre);
         songsGenre.appendChild(textGenre);
         songs.appendChild(songsGenre);
 
         Element songsAlbum = documento.createElement("Album");
-        Text textAlbum=documento.createTextNode("Sencillo");
+        Text textAlbum=documento.createTextNode(NewAlbum);
         songsAlbum.appendChild(textAlbum);
         songs.appendChild(songsAlbum);
 
@@ -59,7 +59,7 @@ public class XMLController {
 
 
         Source source = new DOMSource(documento);
-        Result result = new StreamResult(new File("MOJA TOTO.xml"));
+        Result result = new StreamResult(new File(TXTPath));
 
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.transform(source,result);

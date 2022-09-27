@@ -26,7 +26,7 @@
          <Font size="24.0" />
       </font>
    </Label>
-   <Label layoutX="286.0" layoutY="84.0" />
+   <Label fx:id="cuntinueRepLabel" layoutX="203.0" layoutY="91.0" prefHeight="25.0" prefWidth="225.0" text="Please turn on the cotinue rep button!" visible="false" />
    <Button fx:id="pauseButton" layoutX="134.0" layoutY="208.0" mnemonicParsing="false" onAction="#pauseButtonClicked" text="Pause" visible="false" />
    <Label fx:id="songName" layoutX="14.0" layoutY="57.0" text="Song Name" textFill="RED">
       <font>
@@ -84,4 +84,9 @@
    </Label>
    <Label fx:id="warningLabel" layoutX="120.0" layoutY="103.0" prefHeight="43.0" prefWidth="361.0" text="Dear user your playlist is empty please choose another playlist!" textFill="RED" visible="false" />
    <Button fx:id="warningButton" layoutX="227.0" layoutY="179.0" mnemonicParsing="false" onAction="#userLogOut" prefHeight="43.0" prefWidth="148.0" text="Go Back To Playlists" visible="false" />
+   <Button fx:id="editDataBtn" layoutX="484.0" layoutY="44.0" mnemonicParsing="false" onAction="#editDataBtnGetClicked" prefHeight="5.0" prefWidth="105.0" text="Edit Data">
+      <font>
+         <Font name="System Italic" size="9.0" />
+      </font>
+   </Button>
 </AnchorPane>

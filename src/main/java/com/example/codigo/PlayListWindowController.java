@@ -42,6 +42,7 @@ public class PlayListWindowController extends LogInController{
     public static String tmp;
     public static String tmp2;
     public static String tmp3;
+
     public static String tmp4;
     public static String PlaylistName;
 
@@ -53,7 +54,10 @@ public class PlayListWindowController extends LogInController{
     public void labeluserplaylist1GetPressed(MouseEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
 
         try{
+            PlaylistName= "";
             songsListt.songsList.deleteAllNodes();
+            chosenplaylist="";
+
 
         }catch (Exception q){
 
@@ -90,7 +94,9 @@ public class PlayListWindowController extends LogInController{
     }
     public void labeluserplaylist2GetPressed(MouseEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
         try{
+            PlaylistName= "";
             songsToList.songsList.deleteAllNodes();
+            chosenplaylist="";
 
         }catch (Exception q){
             System.out.println("La DLL estaba vacia");
@@ -122,7 +128,14 @@ public class PlayListWindowController extends LogInController{
         PlaylistName=tmp2;
     }
     public void labeluserplaylist3GetPressed(MouseEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
+        try{
+            songsToList.songsList.deleteAllNodes();
+            chosenplaylist="";
+            PlaylistName= "";
 
+        }catch (Exception q){
+            System.out.println("La DLL estaba vacia");
+        }
         songsListt.songsList = new DoubleLL<Node>();
         try {
             directory = new File(userPlaylistsToChoose.get(2));
@@ -154,7 +167,14 @@ public class PlayListWindowController extends LogInController{
         PlaylistName=tmp3;
     }
     public void labeluserplaylist4GetPressed(MouseEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
+        try{
+            songsToList.songsList.deleteAllNodes();
+            chosenplaylist="";
+            PlaylistName= "";
 
+        }catch (Exception q){
+            System.out.println("La DLL estaba vacia");
+        }
         songsListt.songsList = new DoubleLL<Node>();
         directory = new File(userPlaylistsToChoose.get(3)); //aqui tendria que ir la direccion de la playlist numero 1 de mi usuario luego hago metodo que lea txt
         files = directory.listFiles();
@@ -172,11 +192,9 @@ public class PlayListWindowController extends LogInController{
 
         if (userPlaylistsToChoose.get(3) == null){
             System.out.println("No existe playlist creada!");
-
         }
         else {
             m.changeScene("2ndWindow.fxml");
-
         }
         chosenplaylist= userPlaylistsToChoose.get(3);
         PlaylistName=tmp4;
@@ -217,14 +235,14 @@ public class PlayListWindowController extends LogInController{
     public void createPlaylistBtnGetPressed(ActionEvent event) throws IOException, InterruptedException {
         LogInApplication m = new LogInApplication();
         m.changeScene("createplaylistwindow.fxml"); // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
-
-
     }
 
     public void logOutButtonGetPressed(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
         LogInApplication m = new LogInApplication();
         m.changeScene("loginwindow.fxml"); // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
         userPlaylistsToChoose= new ArrayList<>();
+        PlaylistName= "";
+
     }
 
 }

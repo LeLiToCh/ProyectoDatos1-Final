@@ -272,12 +272,15 @@ public class MusicPlayerController {
 
     public static List<String> favoriteSongsList= new ArrayList<String>();
 
-
+    //ArduinoController k =new ArduinoController();
+    Thread hilo = new Thread();
     public void startPlayBtnGetPressed(ActionEvent event) throws IOException, InterruptedException, JDOMException {
+        songNumber=0;
         //ArduinoController k = new ArduinoController();
         //k.arduinocontroller();
         //arduinocontrollerr();
         //Write2();
+        //hilo.start();
         songToFvrt= "";
         try {
             player.stop();
@@ -533,7 +536,7 @@ public class MusicPlayerController {
 
 
     //DoubleLL canciones = LogInController.usedFiles();
-
+    Boolean songstatus= false;
     public  void playBtnClicked() { // aqui poner un condicional con un booleano para la reproduccion continua
 
         nextButton.setDisable(false);
@@ -611,6 +614,15 @@ public class MusicPlayerController {
         //artistNameLabel.setText(name);
 
     }
+    /*
+    public void stop(){
+
+        hilo.stop();
+
+
+
+    }
+    */
 
     public void userLogOut(ActionEvent event) throws IOException { // funcion log out hace lo mismo que change scene, solo que aqui cambia la escena a la primera (la del log in)
         LogInApplication m = new LogInApplication();
@@ -619,9 +631,14 @@ public class MusicPlayerController {
             player.pause();
             playButton.setDisable(false);
             player = new MP3Player();
+            userPlaylistsSongs= new ArrayList<>();
+
         }catch (Exception e){
             System.out.println("Se ha cambiado la escena");
         }
+        //stop();
+
+
 
     }
 

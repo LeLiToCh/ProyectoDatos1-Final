@@ -1,5 +1,6 @@
 package com.example.codigo;
 
+import com.fazecast.jSerialComm.SerialPort;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -34,12 +35,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 import static com.example.codigo.LogInController.*;
 import static com.example.codigo.PlayListWindowController.*;
 import static com.example.codigo.WriteTXT.userPlaylistsToChoose;
 
 
-public class MusicPlayerController{
+public class MusicPlayerController {
 
     @FXML
     public Button logoutbutton;
@@ -52,21 +54,21 @@ public class MusicPlayerController{
     @FXML
     public Button pauseButton;
     @FXML
-    private Button volumeUpButton;
+    public Button volumeUpButton;
     @FXML
-    private Button volumeDownButton;
+    public Button volumeDownButton;
     @FXML
-    private Button previousButton;
+    public Button previousButton;
     @FXML
-    private Button nextButton;
+    public Button nextButton;
     @FXML
     public Button startPlayButton;
     @FXML
-    private Button addSongButton;
+    public Button addSongButton;
     @FXML
-    private Button deleteSongButton;
+    public Button deleteSongButton;
     @FXML
-    private Button continueRepButton;
+    public Button continueRepButton;
     //boolean temp2= true;
     @FXML
     private Button showFavoriteBtn;
@@ -98,6 +100,18 @@ public class MusicPlayerController{
     //LogInController see=new LogInController();
     //FavotireSongsController fvrt= new FavotireSongsController();
 
+    public Boolean status= false;
+    public  void play_pause_arduino(){
+        if (status == false){
+            playBtnClicked();
+            status=true;
+        }
+        if (status == true){
+            pauseBtnClicked();
+            status=false;
+        }
+
+    }
     public void playButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
         playBtnClicked();                                                                      // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
     }
@@ -256,6 +270,9 @@ public class MusicPlayerController{
 
 
     public void startPlayBtnGetPressed(ActionEvent event) throws IOException, InterruptedException, JDOMException {
+        //ArduinoController k = new ArduinoController();
+        //k.arduinocontroller();
+        //arduinocontrollerr();
         //Write2();
         try {
             player.stop();
@@ -301,12 +318,15 @@ public class MusicPlayerController{
             showFavoriteBtn.setVisible(false);
             continueRepButton.setVisible(false);
         }
+        len = userPlaylistsSongs.size()-1;
 
 
         //System.out.println(songplayed);
 
     }
     public void addSongButtonClicked(ActionEvent event) throws IOException, InterruptedException {
+        //ArduinoController j = new ArduinoController();
+        //j.arduinocontroller();
         player.stop();
         pauseButton.setDisable(true);
         playButton.setDisable(false);
@@ -349,9 +369,9 @@ public class MusicPlayerController{
             current = current.getNext();
         }
 
-        playButton.setVisible(true);
-        startPlayButton.setVisible(false);
-        pauseButton.setVisible(true);
+        playButton.setVisible(false);
+        startPlayButton.setVisible(true);
+        pauseButton.setVisible(false);
         System.out.println("------------------------------");
         System.out.println(userPlaylistsSongs);
         System.out.println("------------------------------");
@@ -409,7 +429,7 @@ public class MusicPlayerController{
     }
 
 
-    MP3Player player;
+    public static MP3Player player;
     Boolean Pause = false;
     Boolean temp = true;
     Boolean temp2 = false;
@@ -509,7 +529,7 @@ public class MusicPlayerController{
 
     //DoubleLL canciones = LogInController.usedFiles();
 
-    public void playBtnClicked() { // aqui poner un condicional con un booleano para la reproduccion continua
+    public  void playBtnClicked() { // aqui poner un condicional con un booleano para la reproduccion continua
 
         nextButton.setDisable(false);
         previousButton.setDisable(false);
@@ -599,6 +619,7 @@ public class MusicPlayerController{
         }
 
     }
+
 
 
 

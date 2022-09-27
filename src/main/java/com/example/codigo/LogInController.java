@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.Scanner;
 
+
 import static com.example.codigo.WriteTXT.userPlaylistsToChoose;
 
 
@@ -94,7 +95,7 @@ public class LogInController extends DoubleLL<Node> {
             m.changeScene("playlistwindow.fxml");
             user=0;
             fvrSongTxt="C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\favoritesongsAndres.txt";
-            userPlaylist= String.valueOf(new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs1"));
+            //userPlaylist= String.valueOf(new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs1"));
             userr= "Andres Madrigal Vega";
             userPlaylistpath= new File(("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Andres Playlists.txt"));
 

@@ -235,24 +235,26 @@ public class MusicPlayerController {
 
     }
 
-
+    String lineToAppend;
     public void addToFavoriteBtnGetClicked(ActionEvent event) throws IOException, InterruptedException, JDOMException { // metodo que se activa si el boton de acceso es tocado,
-
+        lineToAppend = "";
         songToFvrt = String.valueOf(userPlaylistsSongs.get(songNumber)); // aqui poner la variable que tiene el indice que esta reproduciendo, la de temp
 
         songToFvrt = songToFvrt.replace(chosenplaylist+"\\", ""  );
         System.out.println(songToFvrt);
         try
         {
+
             String filePath = fvrSongTxt;
             FileWriter fw = new FileWriter(filePath, true);
-            String lineToAppend = songToFvrt;
+            lineToAppend = songToFvrt;
+            System.out.println(songToFvrt);
             fw.write("\n"+lineToAppend);
             fw.close();
         }
         catch(Exception e)
         {
-            System.out.println(e);
+            System.out.println(e + "algo raro pasa");
         }
 
     }
@@ -260,7 +262,9 @@ public class MusicPlayerController {
         LogInApplication m = new LogInApplication();
         m.changeScene("favoriteSongs.fxml");
         player.pause();
-        playButton.setDisable(false);
+        playButton.setDisable(true);
+        pauseButton.setDisable(true);
+        startPlayButton.setDisable(false);
 
     }
 
@@ -274,6 +278,7 @@ public class MusicPlayerController {
         //k.arduinocontroller();
         //arduinocontrollerr();
         //Write2();
+        songToFvrt= "";
         try {
             player.stop();
         }

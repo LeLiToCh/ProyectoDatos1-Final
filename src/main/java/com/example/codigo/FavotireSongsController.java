@@ -41,7 +41,8 @@ public class FavotireSongsController extends MusicPlayerController{
     private Button goBackBtnFavorite;
     @FXML
     private Button showfvrtButton;
-
+    InputStream ins ;
+    Scanner obj;
     public static List<String> favoriteSongsList= new ArrayList<String>();
 
 
@@ -54,9 +55,9 @@ public class FavotireSongsController extends MusicPlayerController{
 
     }
     public void txtReader() throws FileNotFoundException {
-
-        InputStream ins = new FileInputStream(fvrSongTxt);
-        Scanner obj = new Scanner(ins);
+        favoriteSongsList=new ArrayList<String>();
+        ins = new FileInputStream(fvrSongTxt);
+        obj = new Scanner(ins);
         while (obj.hasNextLine())
             favoriteSongsList.add(obj.nextLine());
         System.out.println(favoriteSongsList);
@@ -81,11 +82,28 @@ public class FavotireSongsController extends MusicPlayerController{
 
     }
 
-    public void goBackBtnFavoriteGetPressed(ActionEvent event) throws IOException, InterruptedException{
+    public void goBackBtnFavoriteGetPressed(ActionEvent event) throws IOException, InterruptedException {
+        songToFvrt="";
+        try {
+            favoriteSongLabel1.setText("");
+            favoriteSongLabel2.setText("");
+            favoriteSongLabel3.setText("");
+            favoriteSongLabel4.setText("");
+            favoriteSongLabel5.setText("");
+            favoriteSongLabel6.setText("");
+            favoriteSongLabel7.setText("");
+            favoriteSongLabel8.setText("");
+            favoriteSongLabel9.setText("");
+            favoriteSongLabel10.setText("");
+            favoriteSongLabel11.setText("");
+            favoriteSongLabel12.setText("");
+        } catch (Exception e) {
+            System.out.println("Se cargo correctamente");
+        }
+        LogInApplication m = new LogInApplication();
+        m.changeScene("2ndWindow.fxml");
 
-            LogInApplication m = new LogInApplication();
-            m.changeScene("2ndWindow.fxml");
 
 
-    }
+       }
 }

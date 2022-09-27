@@ -377,6 +377,7 @@ public class MusicPlayerController {
         playButton.setVisible(false);
         startPlayButton.setVisible(true);
         pauseButton.setVisible(false);
+
         System.out.println("------------------------------");
         System.out.println(userPlaylistsSongs);
         System.out.println("------------------------------");
@@ -394,8 +395,8 @@ public class MusicPlayerController {
         File rn = new File(userPlaylistsSongs.get(songNumber)); // cuando tenga el txt con el playlist nada mas poner el url de la cancion que se este tocando
         System.out.println(rn + "esto es lo q seleccione");
         rn.delete();
-
-
+        pauseButton.setDisable(true);
+        playButton.setDisable(false);
         try{
             songsListt.songsList.deleteAllNodes();
 
@@ -421,11 +422,10 @@ public class MusicPlayerController {
             player.addToPlayList((File) current.getData());
             current = current.getNext();
         }
+        playButton.setVisible(false);
+        startPlayButton.setVisible(true);
+        pauseButton.setVisible(false);
 
-        playButton.setVisible(true);
-        startPlayButton.setVisible(false);
-        pauseButton.setVisible(true);
-        player.play();
         System.out.println("---------------------------");
         System.out.println(userPlaylistsSongs);
         System.out.println("---------------------------");
@@ -434,7 +434,7 @@ public class MusicPlayerController {
     }
 
 
-    public static MP3Player player;
+    MP3Player player;
     Boolean Pause = false;
     Boolean temp = true;
     Boolean temp2 = false;

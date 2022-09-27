@@ -20,16 +20,12 @@ public class LogInApplication extends Application { //heredamos atributos de jav
 
     @Override
     public void start(Stage stage) throws Exception { // metodo start que genera la primera interfaz y setea sus atributos
-
         stg = stage;
         stage.setResizable(false); // con esto no puedo hacer fullscreen para que no se alteren las dimensiones
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("loginwindow.fxml"))); // root padre y su respectivo fxml creado en scene builder
         stage.setTitle("EA Music Player");
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
-
-
-
     }
 
 

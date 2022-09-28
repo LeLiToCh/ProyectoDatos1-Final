@@ -1,7 +1,11 @@
 package com.example.codigo;
+/**
+ * Metodo encargado de control de arduino y creacion del thread que se carga de forma paralela, para recibir las sennales del arduino
+ * @authors Emmanuel Esquivel Chavarria & Andres Madrigal Vega
+ */
+
 import com.fazecast.jSerialComm.*;
 import jaco.mp3.player.MP3Player;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +13,22 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class ArduinoController extends Thread{
-   String line;
-   Integer status;
-   Integer statusRC;
+    /**
+     * String de datos que son recibe Java
+     */
+    String line;
+    /**
+     * Instanciacion de MusicPlayerController con el fin de llamar sus metodos.
+     */
    MusicPlayerController j = new MusicPlayerController();
+    /**
+     * Creacion de un player de la libreria Jaco Player
+     */
    MP3Player player;
+
+    /**
+     * Metodo que corre el thread paralelo y recibe las sennales del arduino. Con base a esas sennales realiza diferentes funciones.
+     */
     @Override
     public void run(){
         SerialPort port = SerialPort.getCommPort("COM3");;
@@ -38,6 +53,11 @@ public class ArduinoController extends Thread{
         }
 
     }
+
+    /**
+     * Funcion que setea el player para evitar hacer un llamado de un player nulo.
+     * @param player player de libreria.
+     */
     public void setPlayer(MP3Player player){
         this.player= player;
     }

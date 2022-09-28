@@ -1,21 +1,44 @@
 package com.example.codigo;
+/**
+ * Clase Lista Doblemente Enlazada Circular que se encarga del movimiento de los nodos y sus interacciones
+ * @authors Emmanuel Esquivel Chavarria & Andres Madrigal Vega
+ */
 
 import javax.swing.plaf.PanelUI;
 import java.io.File;
 
 public class DoubleLL<N> {
+    /**
+     * Nodo cabeza, pincipal nodo de la lista en cuestion.
+     */
     public static Node head;
+    /**
+     * Nodo cola, ubicado al final de la lista.
+     */
     Node tail = null;
+    /**
+     * Tamanno de la lista
+     */
     public int size = 0;
+    /**
+     * Nodo current, para mayor facilidad de moverse dentro de la lista.
+     */
     public static Node current = head;
-
+    /**
+     * Nodo next para obtener el valos que precede.
+     */
     public Node next;
     //private canciones;
 
-
-
+    /**
+     * Instanciacion de lista doblemente enlazada
+     */
     DoubleLL<N> songsList;
 
+    /**
+     * Metodo para setear el seguiente nodo.
+     * @return Node
+     */
     public static Node settNext(){
         current=current.next;
 
@@ -23,11 +46,10 @@ public class DoubleLL<N> {
         return current;
     }
 
-
-
-    //DoubleLL canciones= LogInController.usedFiles();
-
-    //add a node to the list
+    /**
+     * Metodo para annadir nodo a la lista
+     * @param data archivo por annadir.
+     */
     public void addNode(File data) {
         Node newNode = new Node(data);
         if(head == null) {
@@ -43,6 +65,10 @@ public class DoubleLL<N> {
         }
         size++;
     }
+    /**
+     * Metodo para remover nodo a la lista
+     * @param node nodo por remover.
+     */
     public void remove(Node node) {
         if (node.previous == null) {
             head = node.next;
@@ -53,11 +79,10 @@ public class DoubleLL<N> {
             node.next.previous = node.previous;
         }
     }
-    public void setNext(Node node) {
 
-        this.tail.next = node;
-    }
-    //print all the nodes of doubly linked list
+    /**
+     * Metodo para mostrar las lista en cuestion.
+     */
     public void displayList(){
 
         Node current = this.head;
@@ -66,23 +91,35 @@ public class DoubleLL<N> {
             current = current.getNext();
         }
     }
-
+    /**
+     * Metodo para obtener info de la lista en cuestion.
+     */
     public Object getData(){
 
         Node current = this.head;
         return current.getData();
     }
+    /**
+     * Metodo para obtener info que precede de la lista en cuestion.
+     */
     public Object getNextData(){
         Node current = this.head;
         current = current.getNext();
         return current.getData();
     }
-
+    /**
+     * Metodo para setear la cabeza en el siguiente nodo.
+     */
     public Object next(){
         Node current2=this.head.next;
         current2= current2.next;
         return current2;
     }
+
+    /**
+     * Metodo para reproduccion continua en lista doblemente enlazada.
+     * @return retorno nulo.
+     */
     public Object nextCPBtn(){
         if(this.next== null){
             this.next=head;
@@ -92,9 +129,10 @@ public class DoubleLL<N> {
         }
         return null;
     }
-    public Object getNext() {
-        return this.next;
-    }
+
+    /**
+     * Metodo para eliminar todos los nodos de la lista doblemente enlazada cricular.
+     */
     void deleteAllNodes() {
         Node temp = new Node(this.tail);
         while(this.head != null) {

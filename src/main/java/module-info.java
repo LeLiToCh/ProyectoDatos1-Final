@@ -8,6 +8,7 @@ module com.example.codigo {
     requires com.fazecast.jSerialComm;
 
 
+
     opens com.example.codigo to javafx.fxml;
     exports com.example.codigo;
 }

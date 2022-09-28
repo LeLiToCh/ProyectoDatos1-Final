@@ -1,4 +1,9 @@
 package com.example.codigo;
+/**
+ * La clase XML Controller es la encargada de la edicion de la MetaData,su unica funcion recibe como parametros
+ * la nueva informacion que contendra el XML basados en la cancion seleccionada a ser editada.
+ * @authors Emmanuel Esquivel Chavarria & Andres Madrigal Vega
+ */
 
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -14,6 +19,17 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 
 public class XMLController {
+    /**
+     * Este metodo edita toda la iunfo del XML e inserta los datos que el usuario asi desee.
+     * @param TXTPath direccion del XML a editar, en este caso la cancion seleccionada.
+     * @param NewName input del usuario, se extrae por medio de un text field.
+     * @param NewArtist input del usuario, se extrae por medio de un text field.
+     * @param NewYear input del usuario, se extrae por medio de un text field.
+     * @param NewGenre input del usuario, se extrae por medio de un text field.
+     * @param NewAlbum input del usuario, se extrae por medio de un text field.
+     * @throws ParserConfigurationException excepcion de configuracion del XML
+     * @throws TransformerException excepcion causada a la hora de transformar la informacion.
+     */
     public static void XMLCreator(String TXTPath, String NewName,String NewArtist, String NewYear, String NewGenre,String NewAlbum) throws ParserConfigurationException, TransformerException {
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

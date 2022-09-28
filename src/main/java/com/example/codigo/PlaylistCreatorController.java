@@ -1,4 +1,8 @@
 package com.example.codigo;
+/**
+ * Clase para la creacion de las distintas playlistsv y su carga en el txt de canciones.
+ * @authors Emmanuel Esquivel Chavarria & Andres Madrigal Vega
+ */
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,18 +18,45 @@ import java.io.IOException;
 import static com.example.codigo.LogInController.*;
 
 public class PlaylistCreatorController {
-
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este atributo nos permite
+     * mostrar el nombre de la playlist en cuestion.
+     */
     @FXML
     private Label PlaylistLabel;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este atributo nos permite
+     * obtener el texto ingresado por el usuario.
+     */
     @FXML
     private TextField PlaylistNameTextField;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este atributo nos permite
+     * llamar la funcion que crea la playlist.
+     */
     @FXML
     private Button CreatePlaylistBtn;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este atributo nos permite
+     * regresar a la ventana anterior.
+     */
     @FXML
     private Button goBackPlaylistCreatorBtn;
-
+    /**
+     * Archivo con la direccion de donde crear
+     */
     public File filetocreatee;
 
+    /**
+     * Metodo llamado por el boton crear, este metodo crea la libreria en la direccion indicada.
+     * @param event click en el boton.
+     * @throws IOException excepcion durante la carga.
+     * @throws InterruptedException interrupcion durante la carga.
+     */
     public void CreatePlaylistBtnGetPressed(ActionEvent event) throws IOException, InterruptedException {
        String PlaylistName= PlaylistNameTextField.getText();
        File filetowrt= userPlaylistpath;
@@ -37,12 +68,22 @@ public class PlaylistCreatorController {
 
        addtoplaylist();
     }
+
+    /**
+     * Metodo para regresar a la ventana anterior
+     * @param event click en el boton.
+     * @throws IOException excepcion durante la carga.
+     * @throws InterruptedException interrupcion durante la carga.
+     */
     public void goBackPlaylistCreatorBtnGetPressed(ActionEvent event) throws IOException, InterruptedException {
         LogInApplication m = new LogInApplication();
         m.changeScene("playlistwindow.fxml");
 
     }
 
+    /**
+     * Metodo que abre el dialogo de seleccion de cancion para agregar la cancion de nuestra prefernecia al playlist.
+     */
     public void addtoplaylist(){
         FileChooser songToAdd = new FileChooser();
         String selection = String.valueOf(songToAdd.showOpenDialog(null));
@@ -58,28 +99,7 @@ public class PlaylistCreatorController {
         } else {
             System.out.println("Failed");
         }
-        //player.addToPlayList(new File(targetDirectory + "\\" + filetoadd.getName()));
-        //songsToList.addNode(new File(targetDirectory + "\\" + filetoadd.getName()));
-
-
-
 
     }
-
-
-    /*
-    nota esto lo pongo donde se crea el playslist para eso hago estos imports
-    import java.time.LocalDate;
-    import java.time.LocalTime;
-
-    luego esto lo pongo en la parte de cuando el playlist se creo
-       LocalTime localTime = LocalTime.now();
-    LocalDate localDate = LocalDate.now()
-    esta variable la lugardo en un string
-    y luego eso lo guardo en un label y lo contcateno a la carga de mi playlist
-     ojo solo lo concateno a la parte nueva porque las otras tienen otra fecha
-     para cada playlist guardo la fecha en una variable diferente para que asi queden guardadas
-      si quiero en el metodo que me escribe la info al user playslists podria tambien concatenar la fecha
-     */
 
 }

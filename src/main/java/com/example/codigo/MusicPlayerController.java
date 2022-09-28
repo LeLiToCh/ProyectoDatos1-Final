@@ -20,6 +20,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+
 import javax.sound.sampled.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -34,70 +35,198 @@ import static com.example.codigo.WriteTXT.userPlaylistsToChoose;
 public class MusicPlayerController {
     /**
      * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
-     * en este caso mediante del uso directo de las API de JavaFX
-     * @code
+     * en este caso mediante del uso directo de las API de JavaFX. Este atributo es el de boton de
+     * log out que permite cerrar sesion si el usuario asi lo desea.
      */
     @FXML
     public Button logoutbutton;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este atributo nos permite
+     * mostrar el nombre de la cancion obtenido previamente de un XML.
+     */
     @FXML
     public Label songName;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Esta es una imagen para reporduccion continua
+     */
     @FXML
     public ImageView continueRep;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este es el boton que
+     * nos permiterealizar el llamado a la funcion que reproduce el MP3 Player.
+     */
     @FXML
     public Button playButton;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX.Este es el boton que
+     * nos permiterealizar el llamado a la funcion que pausa el MP3 Player.
+     */
     @FXML
     public Button pauseButton;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX.Este boton es el que realiza
+     * el llamado a la funcion que nos permite la subida del volumen.
+     */
     @FXML
     public Button volumeUpButton;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este boton es el que realiza
+     * el llamado a la funcion que nos permite bajar el volumen.
+     */
     @FXML
     public Button volumeDownButton;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este es el boton que
+     * llama a la funcion que nos permite acceder a la cancion que antecede a la cancion actual.
+     */
     @FXML
     public Button previousButton;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este es el boton que
+     * llama a la funcion que nos permite acceder a la siguiente cancion.
+     */
     @FXML
     public Button nextButton;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este es el boton que nos permirte
+     * cargar todas las canciones a la lista doblemente enlazada circular.
+     */
     @FXML
     public Button startPlayButton;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este boton es el que
+     * carga el FileChooser para realizar la seleccion de la cancion que queremos agregar.
+     */
     @FXML
     public Button addSongButton;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este boton es el que nos
+     * permite eliminacion de la cancion actual, en caso de ser requerido.
+     */
     @FXML
     public Button deleteSongButton;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este boton es el que nos
+     * permite la activacion de la reproduccion continua, con el fin de poder saltar de la
+     * ultima a la primera cancion o viceversa.
+     */
     @FXML
     public Button continueRepButton;
-    //boolean temp2= true;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este es el boton que nos permite
+     * mostrar la interfaz de canciones favoritas.
+     */
     @FXML
     private Button showFavoriteBtn;
+    /**
+     * Atributo que indica el indice de la cancion la cual esta siendo reproducida
+     */
     int songNumber = 0;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este es el boton que nos
+     * permite agregar la cancion actual a las canciones favoritas.
+     */
     @FXML
     private Button addToFavoriteBtn;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Label que nos perimite
+     * acceder a la informacion del nombre del artista de la cancion por medio de un XML.
+     */
     @FXML
     private Label artistNameLabel;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Label que nos perimite
+     * acceder a la informacion del nombre de la cancion por medio de un XML.
+     */
     @FXML
     private Label songNameLabel;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Label que nos perimite
+     * acceder a la informacion del año de la cancion por medio de un XML.
+     */
     @FXML
     private Label yearLabel;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Label que nos perimite
+     * acceder a la informacion del genero de la cancion por medio de un XML.
+     */
     @FXML
     private Label genreLabel;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Label que nos perimite
+     * acceder a la informacion del album al que pertenece la cancion por medio de un XML.
+     */
     @FXML
     private Label albumLabel;
+    /**
+     * Atributo que indica la cancion que esta por ser introducida a favoritos
+     */
     public String songToFvrt;
-    public Node songToRmv;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX.
+     */
     @FXML
     public Button warningButton;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este es un boton que se
+     * activa si y solo si se genera un error con la carga de los playlist.
+     */
     @FXML
     public Label cuntinueRepLabel;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este es un Label que
+     * se activa si y solo si la cancion actual es la ultima y el usuario presiona el next,
+     * pero aun no esta activado el boton de reproduccion continua.
+     */
     @FXML
     public Label warningLabel;
-    public String userPlaylistssongTXT;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este es el boton que
+     * nos genera la interfaz de edicion de Meta Data.
+     */
+    @FXML
     public Button editDataBtn;
+    /**
+     * Atributo de tipo string temporal el cual ayuda a almacenar momentaneamente informacion.
+     */
     public static String tmp;
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX. Este es el boton que
+     * nos permite eliminar la playlist en cuestion.
+     */
+    @FXML
     public Button deleteThisPlaylistBtn;
-
-
+    /**
+     * Atributo booleano que envia informacion al Arduino controller acerca de la reproduccion.
+     */
     public Boolean status= false;
 
-
     /**
-     * Llama al metodo play() que hace que el MP3 Player cambie de estado y comience a reproducir musica.
+     * Llama al metodo playBtnClicked() que hace que el MP3 Player cambie de estado y comience a reproducir musica.
      * @param event evento que capta cuando el boton es presionado
      * @throws IOException excepcion causada dependiendo de cierto contexto
      * @throws InterruptedException si se interrumpe el metodo llamado
@@ -106,15 +235,44 @@ public class MusicPlayerController {
         playBtnClicked();
     }
 
+    /**
+     *  Llama al metodo pauseBtnClicked() que hace que el MP3 Player cambie de estado y comience a reproducir musica.
+     *  @param event evento que capta cuando el boton es presionado
+     *  @throws IOException excepcion causada dependiendo de cierto contexto
+     *  @throws InterruptedException si se interrumpe el metodo llamado
+     */
     public void pauseButtonClicked(ActionEvent event) throws IOException, InterruptedException {
         pauseBtnClicked();
     }
+
+    /**
+     * Llama al metodo volumeUpControl que nos permite poner los valores de
+     * volumen que querramos en una escala de 1 a 5.
+     * @param event evento que capta cuando el boton es presionado
+     * @throws IOException excepcion causada dependiendo de cierto contexto
+     * @throws InterruptedException si se interrumpe el metodo llamado
+     */
     public void volumeUpButtonClicked(ActionEvent event) throws IOException, InterruptedException {
         volumeUpControl(0.2);
     }
+
+    /**
+     * Llama al metodo volumeDownControl que nos permite poner los valores de
+     * volumen que querramos en una escala de 1 a 5.
+     * @param event evento que capta cuando el boton es presionado
+     * @throws IOException excepcion causada dependiendo de cierto contexto
+     * @throws InterruptedException si se interrumpe el metodo llamado
+     */
     public void volumeDownButtonClicked(ActionEvent event) throws IOException, InterruptedException {
         volumeDownControl(0.2);
     }
+
+    /**
+     * Genera la nueva interfaz para la edicion de la metadata por los valores que se deseen.
+     * @param event evento que capta cuando el boton es presionado.
+     * @throws IOException excepcion causada dependiendo de cierto contexto
+     * @throws InterruptedException si se interrumpe el metodo llamado
+     */
     public void editDataBtnGetClicked(ActionEvent event) throws IOException, InterruptedException {
         LogInApplication m = new LogInApplication();
         m.changeScene("edtiddata.fxml");
@@ -125,6 +283,14 @@ public class MusicPlayerController {
             System.out.println("");
         }
     }
+
+    /**
+     * Metodo que nos permite eliminar la playlist que se desee, por medio de la eliminacion
+     * de ese directorio en la mini base de datos del usuario.
+     * @param event evento que capta cuando el boton es presionado
+     * @throws IOException excepcion causada dependiendo de cierto contexto
+     * @throws InterruptedException si se interrumpe el metodo llamado
+     */
     public void deleteThisPlaylistBtnGetPressed(ActionEvent event) throws IOException, InterruptedException {
         File tmpp = userPlaylistpath;
         LogInApplication m = new LogInApplication();
@@ -163,6 +329,16 @@ public class MusicPlayerController {
         userPlaylistsSongs= new ArrayList<>();
 
     }
+
+    /**
+     * Metodo que nos permite acceder a la cancion que antecede a la actual,
+     * solo que en caso de estar en la posicion 0, accedera a la ultima si y
+     * solo si la reproduccion continua esta activada.
+     * @param event evento que capta cuando el boton es presionado
+     * @throws IOException excepcion causada dependiendo de cierto contexto
+     * @throws InterruptedException si se interrumpe el metodo llamado
+     * @throws JDOMException si se interrumpe la carga del XML
+     */
     public void previousButtonClicked(ActionEvent event) throws IOException, InterruptedException, JDOMException {
         if (temp2== false && songNumber==0){
             cuntinueRepLabel.setVisible(true);
@@ -209,13 +385,20 @@ public class MusicPlayerController {
             System.out.println(songNumber);
         }
     }
+
+    /**
+     * Atributo que nos indica la cantidad de elementos del playlist.
+     */
     int len = userPlaylistsSongs.size()-1;
 
     /**
+     *  Metodo que nos permite acceder a la cancion que precede a la actual,
+     *  solo que en caso de estar en la ultima poscion, accedera a la primera
+     *  si y solo si la reproduccion continua esta activada.
+     *  @param event evento que capta cuando el boton es presionado
+     *  @throws IOException excepcion causada dependiendo de cierto contexto
+     *  @throws JDOMException si se interrumpe la carga del XML
      *
-     * @param event
-     * @throws IOException
-     * @throws JDOMException
      */
     public void nextButtonClicked(ActionEvent event) throws IOException, JDOMException { // metodo que se activa si el boton de acceso es tocado,
         if (temp2== false && songNumber==len){
@@ -266,7 +449,18 @@ public class MusicPlayerController {
         }
     }
 
+    /**
+     * Atributo tipo string que almacena la info que sera agregada a un txt.
+     */
     String lineToAppend;
+
+    /**
+     * Metodo que nos permite agregar a favoritos la cancion seleccionada, para mostrarlo posteriormente.
+     * @param event evento que capta cuando el boton es presionado
+     * @throws IOException excepcion causada dependiendo de cierto contexto
+     * @throws InterruptedException si se interrumpe el metodo llamado
+     * @throws JDOMException si se interrumpe la carga del XML
+     */
     public void addToFavoriteBtnGetClicked(ActionEvent event) throws IOException, InterruptedException, JDOMException {
         lineToAppend = "";
         songToFvrt = String.valueOf(userPlaylistsSongs.get(songNumber));
@@ -286,6 +480,13 @@ public class MusicPlayerController {
             System.out.println(",");
         }
     }
+
+    /**
+     *  Metodo que nos permite mostrar las canciones favoritas que han sido seleccionadas por el usuario
+     *  @param event evento que capta cuando el boton es presionado
+     *  @throws IOException excepcion causada dependiendo de cierto contexto
+     *  @throws InterruptedException si se interrumpe el metodo llamado
+     */
     public void showFavoriteBtnGetPressed(ActionEvent event) throws IOException,InterruptedException{
         LogInApplication m = new LogInApplication();
         m.changeScene("favoriteSongs.fxml");
@@ -295,9 +496,22 @@ public class MusicPlayerController {
         startPlayButton.setDisable(false);
     }
 
-    public static List<String> favoriteSongsList= new ArrayList<String>();
-
+    /**
+     * ArrayList de tipo string con la lista de canciones favoritas
+     */
+        public static List<String> favoriteSongsList= new ArrayList<String>();
+    /**
+     * Metodo que iunstancia la clase hilo, para crear un hilo paralelo al principal y asi poder recibir las sennales desde el arduino
+     */
     Thread hilo = new Thread();
+
+    /**
+     * Metodo que carga los archivos de tipo file a la lista doblemente enlazada circular, para su posterior carga y reproduccion.
+     * @param event evento que capta cuando el boton es presionado
+     * @throws IOException excepcion causada dependiendo de cierto contexto
+     * @throws InterruptedException si se interrumpe el metodo llamado
+     * @throws JDOMException si se interrumpe la carga del XML
+     */
     public void startPlayBtnGetPressed(ActionEvent event) throws IOException, InterruptedException, JDOMException {
         songNumber=0;
         songToFvrt= "";
@@ -345,6 +559,13 @@ public class MusicPlayerController {
         }
         len = userPlaylistsSongs.size()-1;
     }
+
+    /**
+     * Metodo que nos permite agregar nuevas canciones al playlist y cargarlas al player.
+     * @param event evento que capta cuando el boton es presionado
+     * @throws IOException excepcion causada dependiendo de cierto contexto
+     * @throws InterruptedException si se interrumpe el metodo llamado
+     */
     public void addSongButtonClicked(ActionEvent event) throws IOException, InterruptedException {
         //ArduinoController j = new ArduinoController();
         //j.arduinocontroller();
@@ -398,10 +619,22 @@ public class MusicPlayerController {
 
     }
 
+    /**
+     * Directorio (playlist) escogido por el usuario
+     */
     File directory;
+    /**
+     * Lista de tipo file la cual almacena la lista de archivos que proceden del directorio
+     */
     File[] files;
-    public File filetocreatee2;
 
+    /**
+     * Metodo que nos permite eliminar la cancion y volver a cargar la lista doblemente enlazada, solo que SIN ese archivo.
+     * @param event evento que capta cuando el boton es presionado
+     * @throws IOException excepcion causada dependiendo de cierto contexto
+     * @throws InterruptedException si se interrumpe el metodo llamado
+     *
+     */
     public void deleteSongButtonClicked(ActionEvent event) throws IOException, InterruptedException {
         System.out.println(userPlaylistsSongs + "aqui busco pa borrar");
         player.stop();
@@ -441,10 +674,30 @@ public class MusicPlayerController {
         System.out.println("---------------------------");
         songNumber = 0;
     }
+
+    /**
+     * Reproductor MP3 de la clase jaco player.
+     */
     private MP3Player player;
+    /**
+     * Atributo de tippo booleano que indica el estado de reproductor (pausa).
+     */
     Boolean Pause = false;
+    /**
+     * Atributo de tipo booleano que nos indica el estado del reproductor (play).
+     */
     Boolean temp = true;
+    /**
+     * Atributo de tipo booleano que indica el estado de la reproduccion continua.
+     */
     Boolean temp2 = false;
+
+    /**
+     * Metodo que setea el estado de temp2 mismo atributo que hace que la reproduccion contunua sea verdadero o falso.
+     * @param event evento que capta cuando el boton es presionado
+     * @throws IOException excepcion causada dependiendo de cierto contexto
+     * @throws InterruptedException si se interrumpe el metodo llamado
+     */
     public void continueRepButtonClicked(ActionEvent event) throws IOException, InterruptedException {
         if (temp2==false) {
             temp2 = true;
@@ -457,18 +710,9 @@ public class MusicPlayerController {
             System.out.println(temp2);
         }
     }
-    public void continueRepButtonClicked1() throws IOException, InterruptedException {
-        if (temp2==false) {
-            temp2 = true;
-            System.out.println(temp2);
-            player.setRepeat(true);
-        }
-        else{
-            player.setRepeat(false);
-            temp2=false;
-            System.out.println(temp2);
-        }
-    }
+    /**
+     * Metodo que setea el volumen dependiendo de los valores de entrada.
+     */
     private void volumeDownControl(Double value) {
 
         Mixer.Info[] mixers = AudioSystem.getMixerInfo();
@@ -501,7 +745,9 @@ public class MusicPlayerController {
         }
 
     }
-
+    /**
+     * Metodo que setea el volumen dependiendo de los valores de entrada.
+     */
     private void volumeUpControl(Double value) {
         Mixer.Info[] mixers = AudioSystem.getMixerInfo();
         for (Mixer.Info mixerInfo : mixers) {
@@ -534,7 +780,9 @@ public class MusicPlayerController {
 
     }
 
-    Boolean songstatus= false;
+    /**
+     * Metodo que activa la reproducion del MP3 Player.
+     */
     public  void playBtnClicked() {
         nextButton.setDisable(false);
         previousButton.setDisable(false);
@@ -552,6 +800,9 @@ public class MusicPlayerController {
         System.out.println(player.getUI());
     }
 
+    /**
+     * Metodo que desactiva la reproducion del MP3 Player.
+     */
     public void pauseBtnClicked() {
         try {
             if (Pause == false) {
@@ -570,7 +821,17 @@ public class MusicPlayerController {
         }
     }
 
+    /**
+     * Atributo de tipo ArrayList que almacena la lista de canciones.
+     */
     public static List<String> SongsList= new ArrayList<String>();
+
+    /**
+     * Metodo que muestra el XML en pantalla.
+     * @param songNamee evento que capta cuando el boton es presionado
+     * @throws IOException excepcion causada dependiendo de cierto contexto
+     * @throws JDOMException si se interrumpe la carga del XML
+     */
     public void showtheXML(String songNamee) throws IOException, JDOMException {
 
 
@@ -603,6 +864,13 @@ public class MusicPlayerController {
         }
     }
 
+    /**
+     * Metodo para volver a la ventana de playlist del usuario
+     * @param event
+     * @throws IOException excepcion causada dependiendo de cierto contexto
+     *
+     */
+
     public void userLogOut(ActionEvent event) throws IOException { // funcion log out hace lo mismo que change scene, solo que aqui cambia la escena a la primera (la del log in)
         LogInApplication m = new LogInApplication();
         m.changeScene("playlistwindow.fxml");
@@ -619,6 +887,10 @@ public class MusicPlayerController {
 
     }
 
+    /**
+     * Metodo para setar el player, con esto puede ser llamado en cualquier momento.
+     * @param player
+     */
     public void setPlayer(MP3Player player){
         this.player= player;
     }

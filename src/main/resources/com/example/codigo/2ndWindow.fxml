@@ -89,4 +89,9 @@
          <Font name="System Italic" size="9.0" />
       </font>
    </Button>
+   <Button fx:id="deleteThisPlaylistBtn" layoutX="489.0" layoutY="74.0" mnemonicParsing="false" onAction="#deleteThisPlaylistBtnGetPressed" text="Delete this playlist" textFill="RED">
+      <font>
+         <Font name="System Italic" size="10.0" />
+      </font>
+   </Button>
 </AnchorPane>

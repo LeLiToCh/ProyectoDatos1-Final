@@ -55,7 +55,7 @@ public class LogInController extends DoubleLL<Node> {
             m.changeScene("playlistwindow.fxml");
             user= 2;
             fvrSongTxt="C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\favoritesongsEma.txt";
-            System.out.println(userPlaylist);
+            //System.out.println(userPlaylist);
             userr= "1";
             userPlaylistpath= new File(("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Emmanuel Playlists.txt"));
         }
@@ -64,7 +64,7 @@ public class LogInController extends DoubleLL<Node> {
             m.changeScene("playlistwindow.fxml");
             user= 2;
             fvrSongTxt="C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\favoritesongsEma.txt";
-            userPlaylist= String.valueOf(new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs"));
+            //userPlaylist= String.valueOf(new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Songs"));
             userr="Emmanuel Esquivel Chavarria";
             userPlaylistpath= new File(("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\Emmanuel Playlists.txt"));
         }

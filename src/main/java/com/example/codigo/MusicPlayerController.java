@@ -28,7 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import static com.example.codigo.LogInController.*;
 import static com.example.codigo.PlayListWindowController.*;
-
+import static com.example.codigo.WriteTXT.userPlaylistsToChoose;
 
 
 public class MusicPlayerController {
@@ -90,24 +90,11 @@ public class MusicPlayerController {
     public String userPlaylistssongTXT;
     public Button editDataBtn;
     public static String tmp;
-    //public Node canciones = null;
-    //LogInController see=new LogInController();
-    //FavotireSongsController fvrt= new FavotireSongsController();
+    public Button deleteThisPlaylistBtn;
+
 
     public Boolean status= false;
-    /*
-    public  void play_pause_arduino(){
-        if (status == false){
-            playBtnClicked();
-            status=true;
-        }
-        if (status == true){
-            pauseBtnClicked();
-            status=false;
-        }
 
-    }
-    */
 
     /**
      * Llama al metodo play() que hace que el MP3 Player cambie de estado y comience a reproducir musica.
@@ -138,7 +125,44 @@ public class MusicPlayerController {
             System.out.println("");
         }
     }
+    public void deleteThisPlaylistBtnGetPressed(ActionEvent event) throws IOException, InterruptedException {
+        File tmpp = userPlaylistpath;
+        LogInApplication m = new LogInApplication();
+        m.changeScene("playlistwindow.fxml");
+        try {
+            player.stop();
+            playButton.setDisable(false);
+            player = new MP3Player();
+            userPlaylistsSongs= new ArrayList<>();
 
+        }catch (Exception e){
+            System.out.println("Se ha cambiado la escena");
+        }
+        File rn = new File(chosenplaylist);
+        System.out.println(rn + "esto es lo q seleccione");
+        rn.delete();
+        System.out.println(userPlaylistsToChoose);
+        userPlaylistsToChoose.remove(new String(chosenplaylist));
+        System.out.println(userPlaylistsToChoose);
+        File rnn = new File(String.valueOf(userPlaylistpath));
+        System.out.println(rnn + "esto es lo q seleccione");
+        rnn.delete();
+        File filetocreat= new File(String.valueOf(userPlaylistpath));
+        userPlaylistpath=tmpp;
+        filetocreat.createNewFile();
+        File filetowrt= tmpp;
+        FileWriter k = new FileWriter(filetowrt,true);
+        try {
+            for (int i = 0; i <= userPlaylistsToChoose.size(); i++) {
+                k.write(userPlaylistsToChoose.get(i));
+                k.close();
+            }
+        }catch(IndexOutOfBoundsException y){
+            System.out.println(".");
+        }
+        userPlaylistsSongs= new ArrayList<>();
+
+    }
     public void previousButtonClicked(ActionEvent event) throws IOException, InterruptedException, JDOMException {
         if (temp2== false && songNumber==0){
             cuntinueRepLabel.setVisible(true);

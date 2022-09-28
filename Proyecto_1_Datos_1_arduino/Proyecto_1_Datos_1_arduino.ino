@@ -6,16 +6,30 @@ int ledVol3 = 5;
 int ledVol4 = 4;
 int ledVol5 = 3;
 int valpot;
+
 byte play = 0;
 int playLed = 2;
+
 int playButton = 1;
 int nextButton = 8;
 int previousButton = 9;
+
 byte RC = 0;
 int RCPlayLed = 12;
 int RCButton = 11;
+byte LastStateRC = LOW;
 
-  
+byte lastStateButton1 = LOW;
+byte lastStateButton2 = LOW;
+byte lastStateButton3 = LOW;
+byte lastStateButton4 = LOW;
+byte lastStateButton5 = LOW;
+
+
+byte lastButtonStateRC;
+byte lastButtonStatePlay;
+byte PlayState = HIGH;
+
 void setup() {
   pinMode(ledVol1, OUTPUT);
   pinMode(ledVol2, OUTPUT);
@@ -33,9 +47,15 @@ void setup() {
 }
 
 void loop() {
-  
+  delay(250);
   valpot = analogRead(A1);
-  
+  byte lastButtonStateRC = digitalRead(RCButton);
+  byte lastButtonStatePlay = digitalRead(playButton);
+  byte lastButtonStateT = digitalRead(nextButton);
+  byte lastButtonStateP = digitalRead(previousButton);
+
+  int sensorValue = analogRead(A1);
+
   if (valpot >= 0 && valpot < 205) {
     digitalWrite (ledVol1, HIGH);
     digitalWrite (ledVol2, LOW);
@@ -76,49 +96,32 @@ void loop() {
     digitalWrite (ledVol4, HIGH);
     digitalWrite (ledVol5, HIGH);
   }
-    
-  if (digitalRead(playButton == HIGH)){
-    play =1;
-    //playSong()
-    //Serial.write(1);
-    //delay(1);
+  byte buttonStatePlay;
 
-  }
+    if(buttonStatePlay != lastButtonStatePlay){
+      lastButtonStatePlay = buttonStatePlay;
+      if (buttonStatePlay == LOW){
+        if(PlayState == HIGH){
+          PlayState = LOW;
+          }
+          else{
+           PlayState = HIGH;
+           
+          }
+      }
+      
+    }
+ 
   
-  if (play == true){
-    digitalWrite(playLed, HIGH);
-
-  }
-  
-  if (play == false){
-    digitalWrite(playLed, LOW);
-  }
-  
-  if (digitalRead(nextButton) == HIGH){
-    //nextSong();
-    play = play;
-  }
-  
-  if (digitalRead(previousButton) == HIGH){
-    //previousSong();
-    play = play;
-  }
-  
-  if (digitalRead(RCButton == HIGH)){
-    RC = 1;
-    //continuousPlay()
-  }
-  
-  if (RC == true){
-    digitalWrite(RCPlayLed, HIGH);
-  }
-  
-  if (RC == false){
-    digitalWrite(RCPlayLed, LOW);
-  }
-  Serial.print(play);
+  Serial.print(PlayState);
   Serial.print(";");
-  Serial.print(RC);
+  Serial.print(lastButtonStateRC);
+  Serial.print(";");
+  Serial.print(lastButtonStateT);
+  Serial.print(";");
+  Serial.print(lastButtonStateP);
+  Serial.print(";");
+  Serial.print("\n");
 
 
 }

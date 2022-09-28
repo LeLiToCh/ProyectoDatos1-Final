@@ -1,6 +1,14 @@
 package com.example.codigo;
+/**
+ * La clase MusicPlayerController es la encargada de la manipulacion y edicion de la interfaz principal de este proyecto
+ * en esta clase se estipulan todos los "Buttons", "Labels", entre otros. Mismos que son necesarios para la reproduccion
+ * de la musica en el "Music Player". Esta clase tambien es la encargada de cargar otras interfaces como la de "FavoriteSongs",
+ * "Edit Data", entre otras.
+ *
+ * @authors Emmanuel Esquivel Chavarria & Andres Madrigal Vega
+ *
+ */
 
-import com.fazecast.jSerialComm.SerialPort;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,37 +20,23 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
-
 import javax.sound.sampled.*;
-import javax.swing.*;
 import java.io.*;
-import java.nio.file.*;
 import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.List;
-import java.util.Scanner;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-
-import javax.xml.transform.dom.DOMSource;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-
-
 import static com.example.codigo.LogInController.*;
 import static com.example.codigo.PlayListWindowController.*;
-import static com.example.codigo.WriteTXT.userPlaylistsToChoose;
+
 
 
 public class MusicPlayerController {
-
+    /**
+     * Mediante del @FXML podemos definir interfaces de usuario de manera declarativa,
+     * en este caso mediante del uso directo de las API de JavaFX
+     * @code
+     */
     @FXML
     public Button logoutbutton;
     @FXML
@@ -101,6 +95,7 @@ public class MusicPlayerController {
     //FavotireSongsController fvrt= new FavotireSongsController();
 
     public Boolean status= false;
+    /*
     public  void play_pause_arduino(){
         if (status == false){
             playBtnClicked();
@@ -112,20 +107,28 @@ public class MusicPlayerController {
         }
 
     }
-    public void playButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
-        playBtnClicked();                                                                      // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
-    }
-    public void pauseButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
-        pauseBtnClicked();                                                                   // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
-    }
-    public void volumeUpButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
-        volumeUpControl(0.2);                                                                   // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
+    */
+
+    /**
+     * Llama al metodo play() que hace que el MP3 Player cambie de estado y comience a reproducir musica.
+     * @param event evento que capta cuando el boton es presionado
+     * @throws IOException excepcion causada dependiendo de cierto contexto
+     * @throws InterruptedException si se interrumpe el metodo llamado
+     */
+    public void playButtonClicked(ActionEvent event) throws IOException, InterruptedException {
+        playBtnClicked();
     }
 
-    public void volumeDownButtonClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
-        volumeDownControl(0.2);                                                                   // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
+    public void pauseButtonClicked(ActionEvent event) throws IOException, InterruptedException {
+        pauseBtnClicked();
     }
-    public void editDataBtnGetClicked(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
+    public void volumeUpButtonClicked(ActionEvent event) throws IOException, InterruptedException {
+        volumeUpControl(0.2);
+    }
+    public void volumeDownButtonClicked(ActionEvent event) throws IOException, InterruptedException {
+        volumeDownControl(0.2);
+    }
+    public void editDataBtnGetClicked(ActionEvent event) throws IOException, InterruptedException {
         LogInApplication m = new LogInApplication();
         m.changeScene("edtiddata.fxml");
         try {
@@ -136,7 +139,7 @@ public class MusicPlayerController {
         }
     }
 
-    public void previousButtonClicked(ActionEvent event) throws IOException, InterruptedException, JDOMException { // metodo que se activa si el boton de acceso es tocado,
+    public void previousButtonClicked(ActionEvent event) throws IOException, InterruptedException, JDOMException {
         if (temp2== false && songNumber==0){
             cuntinueRepLabel.setVisible(true);
             System.out.println(songNumber);
@@ -184,7 +187,12 @@ public class MusicPlayerController {
     }
     int len = userPlaylistsSongs.size()-1;
 
-
+    /**
+     *
+     * @param event
+     * @throws IOException
+     * @throws JDOMException
+     */
     public void nextButtonClicked(ActionEvent event) throws IOException, JDOMException { // metodo que se activa si el boton de acceso es tocado,
         if (temp2== false && songNumber==len){
             cuntinueRepLabel.setVisible(true);
@@ -201,7 +209,7 @@ public class MusicPlayerController {
             System.out.println("-----------------");
             System.out.println(tmp);
             System.out.println("-----------------");
-            showtheXML(tmp); // aqui cambiar a txt
+            showtheXML(tmp);
             System.out.println(songNumber);
         }
         if (temp2==true && songNumber==len){
@@ -232,19 +240,16 @@ public class MusicPlayerController {
             showtheXML(tmp); // aqui cambiar a txt
             System.out.println(songNumber);
         }
-
     }
 
     String lineToAppend;
-    public void addToFavoriteBtnGetClicked(ActionEvent event) throws IOException, InterruptedException, JDOMException { // metodo que se activa si el boton de acceso es tocado,
+    public void addToFavoriteBtnGetClicked(ActionEvent event) throws IOException, InterruptedException, JDOMException {
         lineToAppend = "";
-        songToFvrt = String.valueOf(userPlaylistsSongs.get(songNumber)); // aqui poner la variable que tiene el indice que esta reproduciendo, la de temp
-
+        songToFvrt = String.valueOf(userPlaylistsSongs.get(songNumber));
         songToFvrt = songToFvrt.replace(chosenplaylist+"\\", ""  );
         System.out.println(songToFvrt);
         try
         {
-
             String filePath = fvrSongTxt;
             FileWriter fw = new FileWriter(filePath, true);
             lineToAppend = songToFvrt;
@@ -254,9 +259,8 @@ public class MusicPlayerController {
         }
         catch(Exception e)
         {
-            System.out.println(e + "algo raro pasa");
+            System.out.println(",");
         }
-
     }
     public void showFavoriteBtnGetPressed(ActionEvent event) throws IOException,InterruptedException{
         LogInApplication m = new LogInApplication();
@@ -265,22 +269,13 @@ public class MusicPlayerController {
         playButton.setDisable(true);
         pauseButton.setDisable(true);
         startPlayButton.setDisable(false);
-
     }
-
-
 
     public static List<String> favoriteSongsList= new ArrayList<String>();
 
-    //ArduinoController k =new ArduinoController();
     Thread hilo = new Thread();
     public void startPlayBtnGetPressed(ActionEvent event) throws IOException, InterruptedException, JDOMException {
         songNumber=0;
-        //ArduinoController k = new ArduinoController();
-        //k.arduinocontroller();
-        //arduinocontrollerr();
-        //Write2();
-        //hilo.start();
         songToFvrt= "";
         try {
             player.stop();
@@ -289,26 +284,24 @@ public class MusicPlayerController {
             System.out.println("el reproductor aun no tenia canciones");
             }
         player = new MP3Player();
+        LogInController l = new LogInController();
+        l.setPlayer(player);
         tmp = userPlaylistsSongs.get(songNumber);
         tmp = tmp.replace("\\"+PlaylistName, "");
         tmp = tmp.replace(".mp3", ".xml");
         System.out.println("-----------------");
         System.out.println(tmp);
         System.out.println("-----------------");
-        showtheXML(tmp); // aqui cambiar a txt
-
-        // current = songsToList.head;
+        showtheXML(tmp);
         try {
             Node current = songsToList.head;
             while (current != null) {
                 player.addToPlayList((File) current.getData());
                 current = current.getNext();
             }
-
             playButton.setVisible(true);
             startPlayButton.setVisible(false);
             pauseButton.setVisible(true);
-
         }catch(Exception i){
             System.out.println("no existe el playlist");
             playButton.setVisible(false);
@@ -327,10 +320,6 @@ public class MusicPlayerController {
             continueRepButton.setVisible(false);
         }
         len = userPlaylistsSongs.size()-1;
-
-
-        //System.out.println(songplayed);
-
     }
     public void addSongButtonClicked(ActionEvent event) throws IOException, InterruptedException {
         //ArduinoController j = new ArduinoController();
@@ -351,7 +340,6 @@ public class MusicPlayerController {
         } else {
             System.out.println("Failed");
         }
-        //File song= new File(selection);
         try{
             songsListt.songsList.deleteAllNodes();
 
@@ -376,11 +364,9 @@ public class MusicPlayerController {
             player.addToPlayList((File) current.getData());
             current = current.getNext();
         }
-
         playButton.setVisible(false);
         startPlayButton.setVisible(true);
         pauseButton.setVisible(false);
-
         System.out.println("------------------------------");
         System.out.println(userPlaylistsSongs);
         System.out.println("------------------------------");
@@ -395,7 +381,7 @@ public class MusicPlayerController {
     public void deleteSongButtonClicked(ActionEvent event) throws IOException, InterruptedException {
         System.out.println(userPlaylistsSongs + "aqui busco pa borrar");
         player.stop();
-        File rn = new File(userPlaylistsSongs.get(songNumber)); // cuando tenga el txt con el playlist nada mas poner el url de la cancion que se este tocando
+        File rn = new File(userPlaylistsSongs.get(songNumber));
         System.out.println(rn + "esto es lo q seleccione");
         rn.delete();
         pauseButton.setDisable(true);
@@ -404,13 +390,11 @@ public class MusicPlayerController {
             songsListt.songsList.deleteAllNodes();
 
         }catch (Exception q){
-
             System.out.println("La DLL estaba vacia");
-
         }
         userPlaylistsSongs= new ArrayList<>();
         songsListt.songsList = new DoubleLL<Node>();
-        directory = new File(chosenplaylist); //aqui tendria que ir la direccion de la playlist numero 1 de mi usuario luego hago metodo que lea txt
+        directory = new File(chosenplaylist);
         files = directory.listFiles();
         if (files != null) {
             for (File archivo : files) {
@@ -428,16 +412,12 @@ public class MusicPlayerController {
         playButton.setVisible(false);
         startPlayButton.setVisible(true);
         pauseButton.setVisible(false);
-
         System.out.println("---------------------------");
         System.out.println(userPlaylistsSongs);
         System.out.println("---------------------------");
         songNumber = 0;
-
     }
-
-
-    MP3Player player;
+    private MP3Player player;
     Boolean Pause = false;
     Boolean temp = true;
     Boolean temp2 = false;
@@ -453,14 +433,22 @@ public class MusicPlayerController {
             System.out.println(temp2);
         }
     }
-
-
-
+    public void continueRepButtonClicked1() throws IOException, InterruptedException {
+        if (temp2==false) {
+            temp2 = true;
+            System.out.println(temp2);
+            player.setRepeat(true);
+        }
+        else{
+            player.setRepeat(false);
+            temp2=false;
+            System.out.println(temp2);
+        }
+    }
     private void volumeDownControl(Double value) {
 
         Mixer.Info[] mixers = AudioSystem.getMixerInfo();
         for (Mixer.Info mixerInfo : mixers) {
-
             Mixer mixer = AudioSystem.getMixer(mixerInfo);
             Line.Info[] lineInfos = mixer.getTargetLineInfo();
             for (Line.Info lineInfo : lineInfos) {
@@ -470,7 +458,6 @@ public class MusicPlayerController {
                     line = mixer.getLine(lineInfo);
                     opened = line.isOpen() || line instanceof Clip;
                     if (!opened) {
-
                         line.open();
                     }
                     FloatControl volControl = (FloatControl) line.getControl(FloatControl.Type.VOLUME);
@@ -479,13 +466,9 @@ public class MusicPlayerController {
                     float changeCalc = (float) ((float) currentVolume - (double) volumeToCut);
                     volControl.setValue((changeCalc));
                 } catch (LineUnavailableException lineException) {
-
                 } catch (IllegalArgumentException illException) {
-
                 } finally {
-
                     if (line != null && !opened) {
-
                         line.close();
                     }
                 }
@@ -496,10 +479,8 @@ public class MusicPlayerController {
     }
 
     private void volumeUpControl(Double value) {
-
         Mixer.Info[] mixers = AudioSystem.getMixerInfo();
         for (Mixer.Info mixerInfo : mixers) {
-
             Mixer mixer = AudioSystem.getMixer(mixerInfo);
             Line.Info[] lineInfos = mixer.getTargetLineInfo();
             for (Line.Info lineInfo : lineInfos) {
@@ -509,7 +490,6 @@ public class MusicPlayerController {
                     line = mixer.getLine(lineInfo);
                     opened = line.isOpen() || line instanceof Clip;
                     if (!opened) {
-
                         line.open();
                     }
                     FloatControl volControl = (FloatControl) line.getControl(FloatControl.Type.VOLUME);
@@ -518,13 +498,9 @@ public class MusicPlayerController {
                     float changeCalc = (float) ((float) currentVolume + (double) volumeToCut);
                     volControl.setValue((changeCalc));
                 } catch (LineUnavailableException lineException) {
-
                 } catch (IllegalArgumentException illException) {
-
                 } finally {
-
                     if (line != null && !opened) {
-
                         line.close();
                     }
                 }
@@ -534,11 +510,8 @@ public class MusicPlayerController {
 
     }
 
-
-    //DoubleLL canciones = LogInController.usedFiles();
     Boolean songstatus= false;
-    public  void playBtnClicked() { // aqui poner un condicional con un booleano para la reproduccion continua
-
+    public  void playBtnClicked() {
         nextButton.setDisable(false);
         previousButton.setDisable(false);
         if (temp == true) {
@@ -547,27 +520,29 @@ public class MusicPlayerController {
             pauseButton.setDisable(false);
             playButton.setDisable(true);
             temp = false;
-
         } else {
             player.play();
             pauseButton.setDisable(false);
             playButton.setDisable(true);
-
         }
         System.out.println(player.getUI());
     }
 
     public void pauseBtnClicked() {
-        if (Pause == false) {
-            player.pause();
-            //Pause = true;
-            playButton.setDisable(false);
-            pauseButton.setDisable(true);
-            nextButton.setDisable(true);
-            previousButton.setDisable(true);
-        } else {
-            player.play();
-            Pause = false;
+        try {
+            if (Pause == false) {
+                player.pause();
+                //Pause = true;
+                playButton.setDisable(false);
+                pauseButton.setDisable(true);
+                nextButton.setDisable(true);
+                previousButton.setDisable(true);
+            } else {
+                player.play();
+                Pause = false;
+            }
+        }catch (NullPointerException k){
+            System.out.println(".");
         }
     }
 
@@ -601,28 +576,8 @@ public class MusicPlayerController {
                 songNameLabel.setText(name);
 
             }
-
         }
-
-        //yearLabel.setText(SongsList.get(1));
-        //genreLabel.setText(SongsList.get(2));
-        //albumLabel.setText(SongsList.get(3));
-        //songNameLabel.setText(SongsList.get(0));
-
-        //artistNameLabel.setText(name);
-        // AQUI EDITAR LABELS CON RESPECTO A CANCION SIENDO REPRODUCIDA
-        //artistNameLabel.setText(name);
-
     }
-    /*
-    public void stop(){
-
-        hilo.stop();
-
-
-
-    }
-    */
 
     public void userLogOut(ActionEvent event) throws IOException { // funcion log out hace lo mismo que change scene, solo que aqui cambia la escena a la primera (la del log in)
         LogInApplication m = new LogInApplication();
@@ -638,59 +593,9 @@ public class MusicPlayerController {
         }
         //stop();
 
-
-
     }
 
-
-
-
-
-
-
-    //public static List<String> userPlaylistsSongs= new ArrayList<>();
-    /*
-    public static void Write2() {
-        userPlaylistsSongs= new ArrayList<>();
-        String tmpp=String.valueOf(chosenplaylist);
-        String userPlaylistpathtxt= tmpp.replace("\\Songs","\\Songs.txt");
-        File archivo = null;
-        FileReader fr = null;
-        BufferedReader br = null;
-
-        try {
-            // Apertura del fichero y creacion de BufferedReader para poder
-            // hacer una lectura comoda (disponer del metodo readLine()).
-            archivo = new File (String.valueOf(userPlaylistpathtxt));
-            fr = new FileReader (archivo);
-            br = new BufferedReader(fr);
-
-            // Lectura del fichero
-            String linea;
-            while((linea=br.readLine())!=null) {
-                //System.out.println(linea );
-                userPlaylistsSongs.add(linea);
-            }
-            System.out.println(userPlaylistsSongs + "cuando se corre en el write txt");
-
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            // En el finally cerramos el fichero, para asegurarnos
-            // que se cierra tanto si
-            // una excepcion.
-            try{
-                if( null != fr ){
-                    fr.close();
-                }
-            }catch (Exception e2){
-                e2.printStackTrace();
-            }
-        }
-    }*/
-
-
-
-
+    public void setPlayer(MP3Player player){
+        this.player= player;
+    }
 }

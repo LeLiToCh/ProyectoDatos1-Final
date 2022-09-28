@@ -1,5 +1,4 @@
 package com.example.codigo;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,12 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//import static com.example.codigo.LogInController.userr;
-import static com.example.codigo.LogInController.*;
 import static com.example.codigo.WriteTXT.userPlaylistsToChoose;
 
 public class PlayListWindowController extends LogInController{
-
     @FXML
     private Button logOutButton;
     @FXML
@@ -38,29 +34,21 @@ public class PlayListWindowController extends LogInController{
     public static String chosenplaylist;
     LogInApplication m = new LogInApplication();
     public static List<String> userPlaylistsSongs= new ArrayList<>();
-
     public static String tmp;
     public static String tmp2;
     public static String tmp3;
-
     public static String tmp4;
     public static String PlaylistName;
-
+    private ArduinoController serialReader;
     public void setnameoftheuser(){
         userName.setText(userr);
-
-
     }
     public void labeluserplaylist1GetPressed(MouseEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
-
         try{
             PlaylistName= "";
             songsListt.songsList.deleteAllNodes();
             chosenplaylist="";
-
-
         }catch (Exception q){
-
             System.out.println("La DLL estaba vacia");
         }
         songsListt.songsList = new DoubleLL<Node>();
@@ -80,11 +68,9 @@ public class PlayListWindowController extends LogInController{
 
             if (userPlaylistsToChoose.get(0) == null){
                 System.out.println("No existe playlist creada!");
-
             }
             else {
                 m.changeScene("2ndWindow.fxml");
-
             }
             chosenplaylist= userPlaylistsToChoose.get(0);
         System.out.println("--------------------------------------------");
@@ -97,7 +83,6 @@ public class PlayListWindowController extends LogInController{
             PlaylistName= "";
             songsToList.songsList.deleteAllNodes();
             chosenplaylist="";
-
         }catch (Exception q){
             System.out.println("La DLL estaba vacia");
         }
@@ -115,14 +100,11 @@ public class PlayListWindowController extends LogInController{
         songsToList = songsListt;
         songsListt.displayList();
         System.out.println(songplayed);
-
         if (userPlaylistsToChoose.get(1)==null){
             System.out.println("No existe playlist creada!");
-
         }
         else {
             m.changeScene("2ndWindow.fxml");
-
         }
         chosenplaylist= userPlaylistsToChoose.get(1);
         PlaylistName=tmp2;
@@ -132,7 +114,6 @@ public class PlayListWindowController extends LogInController{
             songsToList.songsList.deleteAllNodes();
             chosenplaylist="";
             PlaylistName= "";
-
         }catch (Exception q){
             System.out.println("La DLL estaba vacia");
         }
@@ -157,11 +138,9 @@ public class PlayListWindowController extends LogInController{
 
         if (userPlaylistsToChoose.get(2) == null){
             System.out.println("No existe playlist creada!");
-
         }
         else {
             m.changeScene("2ndWindow.fxml");
-
         }
         chosenplaylist= userPlaylistsToChoose.get(2);
         PlaylistName=tmp3;
@@ -171,7 +150,6 @@ public class PlayListWindowController extends LogInController{
             songsToList.songsList.deleteAllNodes();
             chosenplaylist="";
             PlaylistName= "";
-
         }catch (Exception q){
             System.out.println("La DLL estaba vacia");
         }
@@ -188,7 +166,6 @@ public class PlayListWindowController extends LogInController{
         songsToList = songsListt;
         songsListt.displayList();
         System.out.println(songplayed);
-
 
         if (userPlaylistsToChoose.get(3) == null){
             System.out.println("No existe playlist creada!");
@@ -234,15 +211,15 @@ public class PlayListWindowController extends LogInController{
 
     public void createPlaylistBtnGetPressed(ActionEvent event) throws IOException, InterruptedException {
         LogInApplication m = new LogInApplication();
-        m.changeScene("createplaylistwindow.fxml"); // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
+        m.changeScene("createplaylistwindow.fxml");
     }
 
-    public void logOutButtonGetPressed(ActionEvent event) throws IOException, InterruptedException { // metodo que se activa si el boton de acceso es tocado,
+    public void logOutButtonGetPressed(ActionEvent event) throws IOException, InterruptedException {
         LogInApplication m = new LogInApplication();
-        m.changeScene("loginwindow.fxml"); // este llama al metodo de click log in que valida si la contrasenna y usuarios son correcto o no
+        m.changeScene("loginwindow.fxml");
         userPlaylistsToChoose= new ArrayList<>();
         PlaylistName= "";
 
-    }
 
+    }
 }

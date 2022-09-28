@@ -15,9 +15,6 @@ public class LogInApplication extends Application { //heredamos atributos de jav
     static private Stage stg; //creamos un stg que puede ser cambiado a futuro
 
 
-
-
-
     @Override
     public void start(Stage stage) throws Exception { // metodo start que genera la primera interfaz y setea sus atributos
         stg = stage;

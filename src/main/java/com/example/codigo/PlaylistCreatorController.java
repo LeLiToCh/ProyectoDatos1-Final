@@ -30,7 +30,7 @@ public class PlaylistCreatorController {
        String PlaylistName= PlaylistNameTextField.getText();
        File filetowrt= userPlaylistpath;
        FileWriter k = new FileWriter(filetowrt,true);
-       k.write("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\"+PlaylistName +"\n");
+       k.write("\n"+"C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\"+PlaylistName );
        k.close();
        filetocreatee= new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\ProyectoDatos1-master\\"+PlaylistName);
        filetocreatee.mkdirs();
